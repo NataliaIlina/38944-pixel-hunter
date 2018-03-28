@@ -3,12 +3,13 @@ const keyCodes = {
   arrowLeft: 37
 };
 const mainScreen = document.querySelector(`.central`);
-const screens = [`#greeting`, `#rules`, `#game-1`, `#game-2`, `#game-3`, `#stats`];
+const screens = [`#greeting`, `#rules`, `#game-1`, `#game-2`, `#game-3`, `#stats`].map((id) => document.querySelector(id));
+
 let currentScreenNumber = 0;
 
 // копируем шаблон и вставляем его вместо главного экрана
 const showScreen = (index) => {
-  let template = document.querySelector(screens[index]).content.cloneNode(true);
+  let template = screens[index].content.cloneNode(true);
   mainScreen.innerHTML = ``;
   mainScreen.appendChild(template);
 };
