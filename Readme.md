@@ -1,7 +1,7 @@
 # Личный проект «Пиксель хантер» [![Build status][travis-image]][travis-url]
 
 * Студент: [Наталья Ильина](https://up.htmlacademy.ru/ecmascript/4/user/38944).
-* Наставник: `Неизвестно`.
+* Наставник: [Никита Ткачук](https://htmlacademy.ru/profile/id450211).
 
 ---
 
