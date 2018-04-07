@@ -73,22 +73,10 @@ const currentScreen = getElementFromTemplate(template);
 const form = currentScreen.querySelector(`.game__content`);
 resetGame(currentScreen);
 
-// const checkButtons = {
-//   first: Array.from(currentScreen.querySelectorAll(`input[name="question1"]`)),
-//   second: Array.from(currentScreen.querySelectorAll(`input[name="question2"]`))
-// };
-//
-// currentScreen.addEventListener(`click`, () => {
-//   const check1 = checkButtons.first.some((elem) => elem.checked === true);
-//   const check2 = checkButtons.second.some((elem) => elem.checked === true);
-//   if (check1 && check2) {
-//     showScreen(nextScreen);
-//   }
-// });
-// так явно лаконичнее
-currentScreen.addEventListener(`click`, () => {
-  const radio = currentScreen.querySelectorAll(`input[type="radio"]:checked`);
-  if (radio.length === 2) {
+// думаю лучше отслеживать изменения в форме, а не клики по экрану
+form.addEventListener(`change`, () => {
+  const checkedButtons = currentScreen.querySelectorAll(`input[type="radio"]:checked`);
+  if (checkedButtons.length === 2) {
     showScreen(nextScreen);
     form.reset();
   }
