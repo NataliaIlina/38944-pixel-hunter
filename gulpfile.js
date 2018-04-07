@@ -7,6 +7,7 @@ const plumber = require('gulp-plumber');
 const postcss = require('gulp-postcss');
 const autoprefixer = require('autoprefixer');
 const server = require('browser-sync').create();
+const mocha = require('gulp-mocha');
 const mqpacker = require('css-mqpacker');
 const minify = require('gulp-csso');
 const rename = require('gulp-rename');
@@ -37,12 +38,6 @@ gulp.task('style', function () {
     .pipe(gulp.dest('build/css'));
 });
 
-// gulp.task('scripts', function () {
-//   return gulp.src('js/**/*.js')
-//     .pipe(plumber())
-//     .pipe(gulp.dest('build/js/'));
-// });
-
 gulp.task('scripts', function () {
   return gulp.src('js/main.js')
     .pipe(plumber())
@@ -53,6 +48,12 @@ gulp.task('scripts', function () {
 });
 
 gulp.task('test', function () {
+  return gulp
+  .src(['js/**/*.test.js'], { read: false })
+  .pipe(mocha({
+    compilers: ['js:babel-register'], // Включим поддержку "import/export" в Mocha тестах
+    reporter: 'spec'       // Вид в котором я хочу отображать результаты тестирования
+  }));
 });
 
 gulp.task('imagemin', ['copy'], function () {
