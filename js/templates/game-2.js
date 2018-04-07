@@ -60,14 +60,13 @@ const template = `<header class="header">
 
 const currentScreen = getElementFromTemplate(template);
 const form = currentScreen.querySelector(`.game__content`);
+
 resetGame(currentScreen);
 
-currentScreen.addEventListener(`click`, () => {
-  const checkedButtons = Array.from(currentScreen.querySelectorAll(`input[type="radio"]:checked`));
-  if (checkedButtons.length) {
-    showScreen(nextScreen);
-    form.reset();
-  }
+form.addEventListener(`change`, () => {
+  showScreen(nextScreen);
+  form.reset();
 });
+
 
 export default currentScreen;
