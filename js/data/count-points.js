@@ -21,15 +21,15 @@ const countPoints = (answers, lives = 0) => {
   }
   // считаем правильные ответы
   const rightAnswers = answers.filter((answer) => {
-    return answer[0] === true;
+    return answer.isCorrect === true;
   });
   // считаем быстрые ответы
   const fastAnswers = rightAnswers.filter((answer) => {
-    return answer[1] < BonusTime.FAST;
+    return answer.time < BonusTime.FAST;
   });
   // считаем долгие ответы
   const slowAnswers = rightAnswers.filter((answer) => {
-    return answer[1] > BonusTime.SLOW;
+    return answer.time > BonusTime.SLOW;
   });
   // общее кол-во набранных очков
   const points = rightAnswers.length * BonusPoint.ANSWER + fastAnswers.length * BonusPoint.TIME - slowAnswers.length * BonusPoint.TIME + lives * BonusPoint.LIFE;
