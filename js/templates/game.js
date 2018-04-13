@@ -13,11 +13,11 @@ const currentState = Object.assign(initialState);
 const currentScreen = document.createElement(`div`);
 const gameScreen = document.createElement(`div`);
 currentScreen.appendChild(gameScreen);
-currentScreen.insertAdjacentElement(`afterbegin`, renderHeader(currentState));
 currentScreen.insertAdjacentElement(`beforeend`, renderFooter());
 
 const renderScreen = (number) => {
   gameScreen.innerHTML = ``;
+  gameScreen.insertAdjacentElement(`afterbegin`, renderHeader(currentState));
   const template = templates[number].template(templates[number].level);
   const screen = gameScreen.appendChild(getElementFromTemplate(template));
   gameScreen.appendChild(renderResult(answers));
@@ -29,6 +29,9 @@ const renderScreen = (number) => {
       form.addEventListener(`change`, () => {
         renderScreen(2);
         answers.push({isCorrect: true, time: 25});
+        if (currentState.lives === 0) {
+          showNextScreen(nextScreen);
+        }
         form.reset();
       });
     } else if (form.classList.contains(`game__content--triple`)) {
@@ -36,6 +39,10 @@ const renderScreen = (number) => {
         if (evt.target.classList.contains(`game__option`)) {
           renderScreen(0);
           answers.push({isCorrect: true, time: 15});
+          currentState.lives -= 1;
+          if (currentState.lives === 0) {
+            showNextScreen(nextScreen);
+          }
         }
       });
     } else {
@@ -45,6 +52,9 @@ const renderScreen = (number) => {
           renderScreen(1);
           answers.push({isCorrect: false, time: 5});
           currentState.lives -= 1;
+          if (currentState.lives === 0) {
+            showNextScreen(nextScreen);
+          }
           form.reset();
         }
       });
