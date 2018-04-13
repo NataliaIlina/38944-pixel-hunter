@@ -31,9 +31,9 @@ const LevelType = {
   }
 };
 
-const game = {
+const initialState = {
   time: 30,
-  lives: 2,
+  lives: 3,
 };
 
-export {game, LevelType};
+export {initialState, LevelType};
