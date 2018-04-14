@@ -69,15 +69,15 @@ const templateThird = (level) => {
 // шаблоны хочется связать с объектами для заполнения
 const templates = [
   {
-    template: templateFirst,
+    type: templateFirst,
     level: LevelType.FIRST
   },
   {
-    template: templateSecond,
+    type: templateSecond,
     level: LevelType.SECOND
   },
   {
-    template: templateThird,
+    type: templateThird,
     level: LevelType.THIRD
   }
 ];

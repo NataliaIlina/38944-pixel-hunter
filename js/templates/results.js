@@ -1,4 +1,5 @@
 import getElementFromTemplate from '../utils/create-elem.js';
+
 const answerType = {
   fast: (answer) => {
     return answer.isCorrect && answer.time < 10;

@@ -34,6 +34,7 @@ const LevelType = {
 const initialState = {
   time: 30,
   lives: 3,
+  victory: false
 };
 
 export {initialState, LevelType};
