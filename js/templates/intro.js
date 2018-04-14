@@ -1,7 +1,9 @@
 import getElementFromTemplate from '../utils/create-elem.js';
 import showScreen from '../utils/show-screen.js';
 import nextScreen from '../templates/greeting.js';
-import renderFooter from './footer.js';
+import FooterView from './footer.js';
+
+const footer = new FooterView();
 
 const template = `<div id="main" class="central__content">
     <div id="intro" class="intro">
@@ -11,7 +13,7 @@ const template = `<div id="main" class="central__content">
   </div>`;
 
 const currentScreen = getElementFromTemplate(template);
-currentScreen.insertAdjacentElement(`beforeend`, renderFooter());
+currentScreen.insertAdjacentElement(`beforeend`, footer.element);
 const button = currentScreen.querySelector(`.intro__asterisk`);
 
 button.addEventListener(`click`, () => {

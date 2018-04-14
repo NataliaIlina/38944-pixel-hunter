@@ -1,7 +1,7 @@
 import HeaderView from './header.js';
 import {initialState} from '../data/data.js';
 import templates from './game-templates.js';
-import renderFooter from './footer.js';
+import FooterView from './footer.js';
 import getElementFromTemplate from '../utils/create-elem.js';
 import showNextScreen from '../utils/show-screen.js';
 import nextScreen from './stats.js';
@@ -11,11 +11,12 @@ import renderResult from './results.js';
 const answers = [];
 const currentState = Object.assign(initialState);
 const header = new HeaderView(currentState);
+const footer = new FooterView();
 
 const currentScreen = document.createElement(`div`);
 const gameScreen = document.createElement(`div`);
 currentScreen.appendChild(gameScreen);
-currentScreen.insertAdjacentElement(`beforeend`, renderFooter());
+currentScreen.insertAdjacentElement(`beforeend`, footer.element);
 
 const renderScreen = (template) => {
   gameScreen.innerHTML = ``;
