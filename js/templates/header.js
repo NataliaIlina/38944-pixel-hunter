@@ -1,5 +1,5 @@
 import AbstractView from '../utils/abstract-view.js';
-import resetGame from '../utils/reset-game.js';
+import {resetGame} from '../utils/util.js';
 
 class HeaderView extends AbstractView {
   constructor(game) {

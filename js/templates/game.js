@@ -1,22 +1,19 @@
 import HeaderView from './header.js';
 import {initialState} from '../data/data.js';
 import templates from './game-templates.js';
-import FooterView from './footer.js';
 import getElementFromTemplate from '../utils/create-elem.js';
-import showNextScreen from '../utils/show-screen.js';
+import {changeView} from '../utils/util.js';
 import nextScreen from './stats.js';
 import renderResult from './results.js';
 
 
 const answers = [];
-const currentState = Object.assign(initialState);
+const currentState = Object.assign({}, initialState);
 const header = new HeaderView(currentState);
-const footer = new FooterView();
 
 const currentScreen = document.createElement(`div`);
 const gameScreen = document.createElement(`div`);
 currentScreen.appendChild(gameScreen);
-currentScreen.insertAdjacentElement(`beforeend`, footer.element);
 
 const renderScreen = (template) => {
   gameScreen.innerHTML = ``;
@@ -32,7 +29,7 @@ const renderScreen = (template) => {
       form.addEventListener(`change`, () => {
         answers.push({isCorrect: true, time: 25});
         if (currentState.lives === 0) {
-          showNextScreen(nextScreen);
+          changeView(nextScreen);
         }
         form.reset();
         renderScreen(templates[2]);
@@ -42,7 +39,7 @@ const renderScreen = (template) => {
         if (evt.target.classList.contains(`game__option`)) {
           answers.push({isCorrect: true, time: 15});
           if (currentState.lives === 0) {
-            showNextScreen(nextScreen);
+            changeView(nextScreen);
           }
           renderScreen(templates[0]);
         }
@@ -53,7 +50,7 @@ const renderScreen = (template) => {
         if (checkedButtons.length === 2) {
           answers.push({isCorrect: true, time: 5});
           if (currentState.lives === 0) {
-            showNextScreen(nextScreen);
+            changeView(nextScreen);
           }
           form.reset();
           renderScreen(templates[1]);
@@ -65,7 +62,7 @@ const renderScreen = (template) => {
       return answer.isCorrect === false;
     });
     currentState.victory = wrongAnswers > 3 ? false : true;
-    showNextScreen(nextScreen);
+    changeView(nextScreen);
   }
 };
 

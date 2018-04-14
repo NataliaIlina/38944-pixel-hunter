@@ -1,23 +1,28 @@
-import getElementFromTemplate from '../utils/create-elem.js';
-import showScreen from '../utils/show-screen.js';
+import {changeView} from '../utils/util.js';
 import nextScreen from '../templates/greeting.js';
-import FooterView from './footer.js';
+import AbstractView from '../utils/abstract-view.js';
 
-const footer = new FooterView();
+class IntroView extends AbstractView {
+  constructor() {
+    super();
+  }
 
-const template = `<div id="main" class="central__content">
-    <div id="intro" class="intro">
-      <h1 class="intro__asterisk">*</h1>
-      <p class="intro__motto"><sup>*</sup> Это не фото. Это рисунок маслом нидерландского художника-фотореалиста Tjalf Sparnaay.</p>
-    </div>
-  </div>`;
+  get template() {
+    return `<div id="main" class="central__content">
+        <div id="intro" class="intro">
+          <h1 class="intro__asterisk">*</h1>
+          <p class="intro__motto"><sup>*</sup> Это не фото. Это рисунок маслом нидерландского художника-фотореалиста Tjalf Sparnaay.</p>
+        </div>
+      </div>`;
+  }
 
-const currentScreen = getElementFromTemplate(template);
-currentScreen.insertAdjacentElement(`beforeend`, footer.element);
-const button = currentScreen.querySelector(`.intro__asterisk`);
+  bind() {
+    this.element.querySelector(`.intro__asterisk`).addEventListener(`click`, () => {
+      changeView(nextScreen);
+    });
+  }
+}
 
-button.addEventListener(`click`, () => {
-  showScreen(nextScreen);
-});
+const currentScreen = new IntroView().element;
 
 export default currentScreen;

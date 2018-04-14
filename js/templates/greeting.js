@@ -1,9 +1,6 @@
 import getElementFromTemplate from '../utils/create-elem.js';
-import showScreen from '../utils/show-screen.js';
+import {changeView} from '../utils/util.js';
 import rulesScreen from '../templates/rules.js';
-import FooterView from './footer.js';
-
-const footer = new FooterView();
 
 const template = `<div class="greeting central--blur">
     <div class="greeting__logo"><img src="img/logo_big.png" width="201" height="89" alt="Pixel Hunter"></div>
@@ -20,12 +17,11 @@ const template = `<div class="greeting central--blur">
   </div>`;
 
 const currentScreen = getElementFromTemplate(template);
-currentScreen.insertAdjacentElement(`beforeend`, footer.element);
 
 const button = currentScreen.querySelector(`.greeting__continue`);
 button.addEventListener(`click`, function (evt) {
   evt.preventDefault();
-  showScreen(rulesScreen);
+  changeView(rulesScreen);
 });
 
 export default currentScreen;

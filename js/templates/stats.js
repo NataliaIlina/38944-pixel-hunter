@@ -1,9 +1,7 @@
 import getElementFromTemplate from '../utils/create-elem.js';
-import FooterView from './footer.js';
 import HeaderView from './header.js';
 
 const header = new HeaderView();
-const footer = new FooterView();
 
 const template = `
 <div class="result">
@@ -109,7 +107,6 @@ const template = `
 
 const currentScreen = getElementFromTemplate(template);
 currentScreen.insertAdjacentElement(`afterbegin`, header.element);
-currentScreen.insertAdjacentElement(`beforeend`, footer.element);
 
 
 export default currentScreen;

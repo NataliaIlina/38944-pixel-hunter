@@ -1,11 +1,9 @@
 import getElementFromTemplate from '../utils/create-elem.js';
-import showScreen from '../utils/show-screen.js';
+import {changeView} from '../utils/util.js';
 import nextScreen from './game.js';
-import FooterView from './footer.js';
 import HeaderView from './header.js';
 
 const header = new HeaderView();
-const footer = new FooterView();
 
 const template = `<div class="rules">
   <h1 class="rules__title">Правила</h1>
@@ -26,7 +24,6 @@ const template = `<div class="rules">
 
 const currentScreen = getElementFromTemplate(template);
 currentScreen.insertAdjacentElement(`afterbegin`, header.element);
-currentScreen.insertAdjacentElement(`beforeend`, footer.element);
 
 const button = currentScreen.querySelector(`.rules__button`);
 const userName = currentScreen.querySelector(`.rules__input`);
@@ -37,7 +34,7 @@ userName.addEventListener(`input`, () => {
 
 button.addEventListener(`click`, (evt) => {
   evt.preventDefault();
-  showScreen(nextScreen);
+  changeView(nextScreen);
   userName.value = ``;
   button.disabled = true;
 });
