@@ -1,6 +1,6 @@
 const main = document.querySelector(`.central`);
 import FooterView from '../templates/footer-view.js';
-import greetingScreen from '../templates/greeting.js';
+import greetingScreen from '../templates/greeting-view.js';
 
 const changeView = (element) => {
   main.innerHTML = ``;

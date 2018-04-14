@@ -1,5 +1,5 @@
 import {changeView} from '../utils/util.js';
-import nextScreen from '../templates/greeting.js';
+import nextScreen from '../templates/greeting-view.js';
 import AbstractView from '../utils/abstract-view.js';
 
 class IntroView extends AbstractView {
