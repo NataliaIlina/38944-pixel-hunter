@@ -2,7 +2,9 @@ import getElementFromTemplate from '../utils/create-elem.js';
 import showScreen from '../utils/show-screen.js';
 import nextScreen from './game.js';
 import renderFooter from './footer.js';
-import renderHeader from './header.js';
+import HeaderView from './header.js';
+
+const header = new HeaderView();
 
 const template = `<div class="rules">
   <h1 class="rules__title">Правила</h1>
@@ -22,7 +24,7 @@ const template = `<div class="rules">
 </div>`;
 
 const currentScreen = getElementFromTemplate(template);
-currentScreen.insertAdjacentElement(`afterbegin`, renderHeader());
+currentScreen.insertAdjacentElement(`afterbegin`, header.element);
 currentScreen.insertAdjacentElement(`beforeend`, renderFooter());
 
 const button = currentScreen.querySelector(`.rules__button`);
