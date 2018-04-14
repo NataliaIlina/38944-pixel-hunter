@@ -1,4 +1,4 @@
-import HeaderView from './header.js';
+import HeaderView from './header-view.js';
 import {initialState} from '../data/data.js';
 import templates from './game-templates.js';
 import getElementFromTemplate from '../utils/create-elem.js';

@@ -1,5 +1,5 @@
 import getElementFromTemplate from '../utils/create-elem.js';
-import HeaderView from './header.js';
+import HeaderView from './header-view.js';
 
 const header = new HeaderView();
 
