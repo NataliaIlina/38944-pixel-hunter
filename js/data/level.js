@@ -1,6 +1,3 @@
-// import sources from './sources.js';
-// import getRandomNumber from '../utils/get-random-number.js';
-
 const LevelType = {
   FIRST: {
     task: `Угадайте для каждого изображения фото или рисунок?`,
@@ -44,11 +41,4 @@ const LevelType = {
   }
 };
 
-const initialState = {
-  time: 30,
-  lives: 3,
-  victory: false,
-  answers: []
-};
-
-export {initialState, LevelType};
+export default LevelType;

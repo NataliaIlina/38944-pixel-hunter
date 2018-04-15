@@ -1,71 +1,62 @@
+import GameFirstView from './game-first-view.js';
+import GameSecondView from './game-second-view.js';
+import GameThirdView from './game-third-view.js';
 import HeaderView from './header-view.js';
 import {initialState} from '../data/data.js';
-import templates from './game-templates.js';
-import getElementFromTemplate from '../utils/create-elem.js';
 import {changeView} from '../utils/util.js';
-import nextScreen from './stats.js';
+import endScreen from './stats.js';
 import renderResult from './results.js';
+import LevelType from '../data/level.js';
+import getRandomNumber from '../utils/get-random-number.js';
+const MAX_ANSWERS = 10;
 
-
-const answers = [];
-const currentState = Object.assign({}, initialState);
-const header = new HeaderView(currentState);
-
-const currentScreen = document.createElement(`div`);
+const gameState = Object.assign({}, initialState);
+// игровой экран
 const gameScreen = document.createElement(`div`);
-currentScreen.appendChild(gameScreen);
 
-const renderScreen = (template) => {
+// массив уровней игры
+const gameLevels = [
+  new GameFirstView(LevelType.FIRST),
+  new GameSecondView(LevelType.SECOND),
+  new GameThirdView(LevelType.THIRD)
+];
+
+const renderGame = (level) => {
+  // обнуляем содержимое экрана
   gameScreen.innerHTML = ``;
-  gameScreen.insertAdjacentElement(`afterbegin`, header.element);
-  const screenTemplate = template.type(template.level);
-  const screen = gameScreen.appendChild(getElementFromTemplate(screenTemplate));
-  gameScreen.appendChild(renderResult(answers));
+  // добавляем хедер
+  gameScreen.insertAdjacentElement(`afterbegin`, new HeaderView(gameState).element);
+  // добавляем элемент игры
+  gameScreen.appendChild(level.element);
+  gameScreen.appendChild(renderResult(gameState.answers));
+};
 
-  const form = screen.querySelector(`.game__content`);
 
-  if (answers.length < 10) {
-    if (form.classList.contains(`game__content--wide`)) {
-      form.addEventListener(`change`, () => {
-        answers.push({isCorrect: true, time: 25});
-        if (currentState.lives === 0) {
-          changeView(nextScreen);
-        }
-        form.reset();
-        renderScreen(templates[2]);
-      });
-    } else if (form.classList.contains(`game__content--triple`)) {
-      form.addEventListener(`click`, (evt) => {
-        if (evt.target.classList.contains(`game__option`)) {
-          answers.push({isCorrect: true, time: 15});
-          if (currentState.lives === 0) {
-            changeView(nextScreen);
-          }
-          renderScreen(templates[0]);
-        }
-      });
-    } else {
-      form.addEventListener(`change`, () => {
-        const checkedButtons = form.querySelectorAll(`input[type="radio"]:checked`);
-        if (checkedButtons.length === 2) {
-          answers.push({isCorrect: true, time: 5});
-          if (currentState.lives === 0) {
-            changeView(nextScreen);
-          }
-          form.reset();
-          renderScreen(templates[1]);
-        }
-      });
-    }
+const onUserAnswer = () => {
+  gameState.answers.push({isCorrect: true, time: 7});
+  if (gameState.answers.length === MAX_ANSWERS || gameState.lives === 0) {
+    changeView(endScreen);
   } else {
-    const wrongAnswers = answers.filter((answer) => {
-      return answer.isCorrect === false;
-    });
-    currentState.victory = wrongAnswers > 3 ? false : true;
-    changeView(nextScreen);
+    renderGame(gameLevels[getRandomNumber(0, 2)]);
   }
 };
 
-renderScreen(templates[1]);
+const onWrongUserAnswer = () => {
+  gameState.answers.push({isCorrect: false, time: 15});
+  gameState.lives -= 1;
+  if (gameState.answers.length === MAX_ANSWERS || gameState.lives === 0) {
+    changeView(endScreen);
+  } else {
+    renderGame(gameLevels[getRandomNumber(0, 2)]);
+  }
+};
 
-export default currentScreen;
+gameLevels.forEach((level) => {
+  level.onAnswer = onUserAnswer;
+  level.onWrongAnswer = onWrongUserAnswer;
+});
+
+
+renderGame(gameLevels[getRandomNumber(0, 2)]);
+
+export default gameScreen;
