@@ -1,4 +1,4 @@
-import nextScreen from './templates/intro.js';
-import showScreen from './utils/show-screen.js';
+import nextScreen from './templates/intro-view.js';
+import {changeView} from './utils/util.js';
 
-showScreen(nextScreen);
+changeView(nextScreen);
