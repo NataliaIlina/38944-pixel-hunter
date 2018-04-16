@@ -9,18 +9,15 @@ const BonusPoint = {
   LIFE: 50
 };
 
-const countPoints = (answers, lives = 0) => {
-  if (!Array.isArray(answers)) {
+const countAnswers = (result) => {
+  if (!Array.isArray(result.answers)) {
     throw new Error(`Ожидается получить массив с ответами`);
   }
-  if (typeof lives !== `number`) {
-    throw new Error(`Количество жизней должно иметь числовое значение`);
-  }
-  if (answers.length < 10) {
-    throw new Error(`Получено некорректное количество ответов`);
+  if (result.answers.length < 10) {
+    return false;
   }
   // считаем правильные ответы
-  const rightAnswers = answers.filter((answer) => {
+  const rightAnswers = result.answers.filter((answer) => {
     return answer.isCorrect === true;
   });
   // считаем быстрые ответы
@@ -32,8 +29,20 @@ const countPoints = (answers, lives = 0) => {
     return answer.time > BonusTime.SLOW;
   });
   // общее кол-во набранных очков
-  const points = rightAnswers.length * BonusPoint.ANSWER + fastAnswers.length * BonusPoint.TIME - slowAnswers.length * BonusPoint.TIME + lives * BonusPoint.LIFE;
+  const AnswerResult = {
+    RIGHT: rightAnswers.length,
+    FAST: fastAnswers.length,
+    SLOW: slowAnswers.length,
+    LIVES: result.lives
+  };
+
+  return AnswerResult;
+};
+
+const countPoints = (answers) => {
+  // общее кол-во набранных очков
+  const points = answers.RIGHT * BonusPoint.ANSWER + answers.FAST * BonusPoint.TIME - answers.SLOW * BonusPoint.TIME + answers.LIVES * BonusPoint.LIFE;
   return points;
 };
 
-export default countPoints;
+export {countPoints, countAnswers, BonusPoint};

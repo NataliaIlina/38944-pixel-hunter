@@ -28,7 +28,7 @@ class ResultView extends AbstractView {
   get template() {
     return `<div class="stats">
       <ul class="stats">
-        ${this.classes.map((className) => `<li class="stats__result stats__result--${className}"></li>`)}
+        ${this.classes.map((className) => `<li class="stats__result stats__result--${className}"></li>`).join(``)}
         ${new Array(10 - this.classes.length).fill(`<li class="stats__result stats__result--unknown"></li>`).join(``)}
       </ul>
     </div>`;
