@@ -1,5 +1,5 @@
 import {changeView} from '../../utils/util';
-import nextScreen from '../game';
+import nextScreen from '../game/game-screen';
 import RulesView from './rules-view';
 
 const renderRulesScreen = () => {

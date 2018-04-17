@@ -1,13 +1,13 @@
 import GameFirstView from './game-first-view.js';
 import GameSecondView from './game-second-view.js';
 import GameThirdView from './game-third-view.js';
-import renderHeader from './header/header-screen.js';
-import {initialState} from '../data/data.js';
-import {changeView} from '../utils/util.js';
-import endScreen from './stats.js';
-import ResultView from './result-view.js';
-import LevelType from '../data/level.js';
-import getRandomNumber from '../utils/get-random-number.js';
+import renderHeader from '../header/header-screen.js';
+import {initialState} from '../../data/data.js';
+import {changeView} from '../../utils/util.js';
+import endScreen from '../stats.js';
+import ResultView from '../result-view.js';
+import LevelType from '../../data/level.js';
+import getRandomNumber from '../../utils/get-random-number.js';
 const MAX_ANSWERS = 10;
 
 const gameState = Object.assign({}, initialState);
@@ -16,9 +16,9 @@ const gameScreen = document.createElement(`div`);
 
 // массив уровней игры
 const gameLevels = [
-  new GameFirstView(LevelType.FIRST),
-  new GameSecondView(LevelType.SECOND),
-  new GameThirdView(LevelType.THIRD)
+  new GameFirstView(LevelType.FIRST, gameState),
+  new GameSecondView(LevelType.SECOND, gameState),
+  new GameThirdView(LevelType.THIRD, gameState)
 ];
 
 const renderGame = (level) => {

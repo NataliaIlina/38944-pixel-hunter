@@ -1,4 +1,4 @@
-import AbstractView from '../utils/abstract-view.js';
+import AbstractView from '../../utils/abstract-view.js';
 
 class GameFirstView extends AbstractView {
   constructor(level) {
