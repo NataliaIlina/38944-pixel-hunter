@@ -1,7 +1,7 @@
 import GameFirstView from './game-first-view.js';
 import GameSecondView from './game-second-view.js';
 import GameThirdView from './game-third-view.js';
-import HeaderView from './header-view.js';
+import renderHeader from './header/header-screen.js';
 import {initialState} from '../data/data.js';
 import {changeView} from '../utils/util.js';
 import endScreen from './stats.js';
@@ -25,7 +25,7 @@ const renderGame = (level) => {
   // обнуляем содержимое экрана
   gameScreen.innerHTML = ``;
   // добавляем хедер
-  gameScreen.insertAdjacentElement(`afterbegin`, new HeaderView(gameState).element);
+  gameScreen.insertAdjacentElement(`afterbegin`, renderHeader(gameState).element);
   // добавляем элемент игры
   gameScreen.appendChild(level.element);
   gameScreen.appendChild(new ResultView(gameState.answers).element);
