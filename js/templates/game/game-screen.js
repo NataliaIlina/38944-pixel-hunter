@@ -4,7 +4,7 @@ import GameThirdView from './game-third-view.js';
 import renderHeader from '../header/header-screen.js';
 import {initialState} from '../../data/data.js';
 import {changeView} from '../../utils/util.js';
-import endScreen from '../stats.js';
+import endScreen from '../statistics/statistics-screen.js';
 import ResultView from '../result-view.js';
 import LevelType from '../../data/level.js';
 import getRandomNumber from '../../utils/get-random-number.js';

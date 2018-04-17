@@ -1,4 +1,4 @@
-import getHeader from '../header/header-screen';
+import renderHeader from '../header/header-screen';
 import getElementFromTemplate from '../../utils/create-elem';
 import AbstractView from '../../utils/abstract-view';
 
@@ -45,7 +45,7 @@ class RulesView extends AbstractView {
 
   render() {
     const element = getElementFromTemplate(this.template);
-    element.insertAdjacentElement(`afterbegin`, getHeader().element);
+    element.insertAdjacentElement(`afterbegin`, renderHeader().element);
     return element;
   }
 
