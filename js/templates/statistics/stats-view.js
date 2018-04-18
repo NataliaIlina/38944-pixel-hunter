@@ -1,6 +1,6 @@
-import AbstractView from '../utils/abstract-view.js';
-import {countAnswers, countPoints} from '../data/count-points.js';
-import ResultView from './result-view.js';
+import AbstractView from '../../utils/abstract-view.js';
+import {countAnswers, countPoints} from '../../data/count-points.js';
+import ResultView from '../result-view.js';
 
 class StatsView extends AbstractView {
   constructor(result, points, index) {

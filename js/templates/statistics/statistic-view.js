@@ -1,6 +1,8 @@
-import AbstractView from '../utils/abstract-view.js';
+import AbstractView from '../../utils/abstract-view.js';
 import StatsView from './stats-view.js';
-import {BonusPoint} from '../data/count-points.js';
+import getElementFromTemplate from '../../utils/create-elem';
+import renderHeader from '../header/header-screen.js';
+import {BonusPoint} from '../../data/count-points.js';
 
 class StatisticsView extends AbstractView {
   constructor(results) {
@@ -18,6 +20,12 @@ class StatisticsView extends AbstractView {
       ${this.block2.template}
       ${this.block3.template}
       </div>`;
+  }
+
+  render() {
+    const element = getElementFromTemplate(this.template);
+    element.insertAdjacentElement(`afterbegin`, renderHeader().element);
+    return element;
   }
 }
 

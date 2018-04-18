@@ -1,6 +1,6 @@
 const main = document.querySelector(`.central`);
-import FooterView from '../templates/footer-view.js';
-import greetingScreen from '../templates/greeting-view.js';
+import FooterView from '../templates/footer/footer-view';
+import renderGreetingScreen from '../templates/greeting/greeting-screen';
 
 const changeView = (element) => {
   main.innerHTML = ``;
@@ -9,7 +9,7 @@ const changeView = (element) => {
 };
 
 const resetGame = () => {
-  changeView(greetingScreen);
+  changeView(renderGreetingScreen().element);
 };
 
 export {changeView, resetGame};

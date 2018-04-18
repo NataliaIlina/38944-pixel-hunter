@@ -1,6 +1,4 @@
-import {changeView} from '../utils/util.js';
-import nextScreen from '../templates/greeting-view.js';
-import AbstractView from '../utils/abstract-view.js';
+import AbstractView from '../../utils/abstract-view';
 
 class IntroView extends AbstractView {
   constructor() {
@@ -18,11 +16,13 @@ class IntroView extends AbstractView {
 
   bind() {
     this.element.querySelector(`.intro__asterisk`).addEventListener(`click`, () => {
-      changeView(nextScreen);
+      this.onButtonClick();
     });
+  }
+
+  onButtonClick() {
+
   }
 }
 
-const currentScreen = new IntroView().element;
-
-export default currentScreen;
+export default IntroView;

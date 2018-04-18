@@ -1,6 +1,4 @@
-import {changeView} from '../utils/util.js';
-import rulesScreen from '../templates/rules-view.js';
-import AbstractView from '../utils/abstract-view.js';
+import AbstractView from '../../utils/abstract-view';
 
 class GreetingView extends AbstractView {
   constructor() {
@@ -25,11 +23,13 @@ class GreetingView extends AbstractView {
 
   bind() {
     this.element.querySelector(`.greeting__continue`).addEventListener(`click`, () => {
-      changeView(rulesScreen);
+      this.onButtonClick();
     });
+  }
+
+  onButtonClick() {
+
   }
 }
 
-const currentScreen = new GreetingView().element;
-
-export default currentScreen;
+export default GreetingView;

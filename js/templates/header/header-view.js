@@ -1,5 +1,4 @@
-import AbstractView from '../utils/abstract-view.js';
-import {resetGame} from '../utils/util.js';
+import AbstractView from '../../utils/abstract-view';
 
 class HeaderView extends AbstractView {
   constructor(game) {
@@ -25,8 +24,12 @@ class HeaderView extends AbstractView {
 
   bind() {
     this.element.querySelector(`.back`).addEventListener(`click`, () => {
-      resetGame();
+      this.onButtonClick();
     });
+  }
+
+  onButtonClick() {
+
   }
 }
 

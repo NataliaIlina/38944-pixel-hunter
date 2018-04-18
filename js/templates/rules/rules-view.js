@@ -1,7 +1,6 @@
-import {changeView} from '../utils/util.js';
-import nextScreen from './game.js';
-import HeaderView from './header-view.js';
-import AbstractView from '../utils/abstract-view.js';
+import renderHeader from '../header/header-screen';
+import getElementFromTemplate from '../../utils/create-elem';
+import AbstractView from '../../utils/abstract-view';
 
 class RulesView extends AbstractView {
   constructor() {
@@ -28,23 +27,31 @@ class RulesView extends AbstractView {
   }
 
   bind() {
-    const button = this.element.querySelector(`.rules__button`);
-    const userName = this.element.querySelector(`.rules__input`);
-    // надо ли логику обработчиков выносить в отдельные функции и убирать отсюда?
+    const form = this.element.querySelector(`.rules__form`);
+    const button = form.querySelector(`.rules__button`);
+    const userName = form.querySelector(`.rules__input`);
+
     userName.addEventListener(`input`, () => {
       button.disabled = userName.value ? false : true;
     });
 
-    button.addEventListener(`click`, (evt) => {
+    form.addEventListener(`submit`, (evt) => {
       evt.preventDefault();
-      changeView(nextScreen);
       userName.value = ``;
       button.disabled = true;
+      this.onFormSubmit();
     });
+  }
+
+  render() {
+    const element = getElementFromTemplate(this.template);
+    element.insertAdjacentElement(`afterbegin`, renderHeader().element);
+    return element;
+  }
+
+  onFormSubmit() {
+
   }
 }
 
-const currentScreen = new RulesView().element;
-currentScreen.insertAdjacentElement(`afterbegin`, new HeaderView().element);
-
-export default currentScreen;
+export default RulesView;
