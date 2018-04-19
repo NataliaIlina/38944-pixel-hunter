@@ -11,7 +11,7 @@ class StatisticsView extends AbstractView {
     // превращаем массив в шаблоны
     this.stats = this.results.map((result, index) => {
       return new StatsView(result, BonusPoint, index + 1).template;
-    });
+    }).join(``);
   }
 
   get template() {

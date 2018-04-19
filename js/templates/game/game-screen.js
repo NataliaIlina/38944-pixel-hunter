@@ -57,6 +57,11 @@ class GameScreen {
     return views[level.type];
   }
 
+  init() {
+    this.restartGame();
+    this.startGame();
+  }
+
   answer(answer) {
     this.stopGame();
     switch (answer) {
