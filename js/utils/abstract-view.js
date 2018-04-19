@@ -1,4 +1,4 @@
-import getElementFromTemplate from './create-elem.js';
+import getElementFromTemplate from './create-elem';
 
 class AbstractView {
   constructor() {
