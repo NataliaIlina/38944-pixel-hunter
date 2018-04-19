@@ -64,29 +64,17 @@ class GameScreen {
 
   answer(answer) {
     this.stopGame();
-    switch (answer) {
-      case true:
-        this.model.getAnswer(answer);
-        if (this.model.hasNextLevel()) {
-          this.model.nextLevel();
-          this.startGame();
-        } else {
-          this.model.state.victory = true;
-          totalResults.unshift(this.model.state);
-          Application.showStats(totalResults);
-        }
-        break;
-      case false:
-        this.model.die();
-        this.model.getAnswer(answer);
-        if (!this.model.isDead()) {
-          this.model.nextLevel();
-          this.startGame();
-        } else {
-          totalResults.unshift(this.model.state);
-          Application.showStats(totalResults);
-        }
-        break;
+    this.model.getAnswer(answer);
+
+    if (!answer) {
+      this.model.die();
+    }
+
+    if (!this.model.isDead() && this.model.hasNextLevel()) {
+      this.model.nextLevel();
+      this.startGame();
+    } else {
+      this.endGame();
     }
   }
 
@@ -101,6 +89,11 @@ class GameScreen {
       }
       this.updateHeader();
     }, 1000);
+  }
+
+  endGame() {
+    totalResults.unshift(this.model.state);
+    Application.showStats(totalResults);
   }
 
   stopGame() {

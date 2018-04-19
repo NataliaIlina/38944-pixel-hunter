@@ -22,7 +22,7 @@ class GameModel {
   }
   // условие выхода из игры
   isDead() {
-    return this._state.lives <= 0;
+    return this._state.lives < 0;
   }
   // потеря одной жизни
   die() {
