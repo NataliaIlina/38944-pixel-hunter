@@ -1,6 +1,9 @@
-import renderHeader from '../header/header-screen';
-import getElementFromTemplate from '../../utils/create-elem';
 import AbstractView from '../../utils/abstract-view';
+import HeaderView from '../header/header-view';
+import FooterView from '../footer/footer-view';
+import Application from '../../application';
+import getElementFromTemplate from '../../utils/create-elem';
+
 
 class RulesView extends AbstractView {
   constructor() {
@@ -23,7 +26,14 @@ class RulesView extends AbstractView {
         <input class="rules__input" type="text" placeholder="Ваше Имя">
         <button class="rules__button  continue" type="submit" disabled>Go!</button>
       </form>
-    </div>`;
+    </div>
+    ${new FooterView().template}`;
+  }
+
+  render() {
+    const element = getElementFromTemplate(this.template);
+    element.insertAdjacentElement(`afterbegin`, new HeaderView().element);
+    return element;
   }
 
   bind() {
@@ -37,20 +47,10 @@ class RulesView extends AbstractView {
 
     form.addEventListener(`submit`, (evt) => {
       evt.preventDefault();
+      Application.showGame(userName.value);
       userName.value = ``;
       button.disabled = true;
-      this.onFormSubmit();
     });
-  }
-
-  render() {
-    const element = getElementFromTemplate(this.template);
-    element.insertAdjacentElement(`afterbegin`, renderHeader().element);
-    return element;
-  }
-
-  onFormSubmit() {
-
   }
 }
 

@@ -1,4 +1,4 @@
-import AbstractView from '../utils/abstract-view.js';
+import AbstractView from '../utils/abstract-view';
 
 class ResultView extends AbstractView {
   constructor(answers) {

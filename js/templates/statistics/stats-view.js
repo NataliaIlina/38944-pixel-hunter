@@ -1,6 +1,6 @@
-import AbstractView from '../../utils/abstract-view.js';
-import {countAnswers, countPoints} from '../../data/count-points.js';
-import ResultView from '../result-view.js';
+import AbstractView from '../../utils/abstract-view';
+import {countAnswers, countPoints} from '../../data/count-points';
+import ResultView from '../result-view';
 
 class StatsView extends AbstractView {
   constructor(result, points, index) {
@@ -49,7 +49,7 @@ class StatsView extends AbstractView {
       <tr>
         <td colspan="5" class="result__total  result__total--final">${this.total}</td>
       </tr>` : `<tr>
-        <td class="result__number">2.</td>
+        <td class="result__number">${this.index}</td>
         <td>
           ${this.view}
         </td>
