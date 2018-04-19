@@ -1,53 +1,138 @@
 import GameFirstView from './game-first-view.js';
 import GameSecondView from './game-second-view.js';
 import GameThirdView from './game-third-view.js';
-import renderHeader from '../header/header-screen.js';
-import {initialState} from '../../data/data.js';
-import {changeView} from '../../utils/util.js';
-import endScreen from '../statistics/statistics-screen.js';
+import HeaderView from '../header/header-view.js';
 import ResultView from '../result-view.js';
-import LevelType from '../../data/level.js';
-import getRandomNumber from '../../utils/get-random-number.js';
-const MAX_ANSWERS = 10;
+import FooterView from '../footer/footer-view';
+import Application from '../../application';
 
-const gameState = Object.assign({}, initialState);
-// игровой экран
-const gameScreen = document.createElement(`div`);
+const views = {
+  'two-images': GameFirstView,
+  'one-image': GameSecondView,
+  'three-images': GameThirdView
+};
 
-// массив уровней игры
-const gameLevels = [
-  new GameFirstView(LevelType.FIRST, gameState),
-  new GameSecondView(LevelType.SECOND, gameState),
-  new GameThirdView(LevelType.THIRD, gameState)
+const totalResults = [
+  {
+    level: 0,
+    time: 30,
+    lives: 1,
+    victory: true,
+    answers: new Array(10).fill({isCorrect: true, time: 5})
+  },
+  {
+    level: 0,
+    time: 30,
+    lives: 3,
+    victory: true,
+    answers: new Array(10).fill({isCorrect: true, time: 20})
+  }
 ];
 
-const renderGame = (level) => {
-  // обнуляем содержимое экрана
-  gameScreen.innerHTML = ``;
-  // добавляем хедер
-  gameScreen.insertAdjacentElement(`afterbegin`, renderHeader(gameState).element);
-  // добавляем элемент игры
-  gameScreen.appendChild(level.element);
-  gameScreen.appendChild(new ResultView(gameState.answers).element);
-};
 
+class GameScreen {
+  constructor(model) {
+    this.model = model;
+    this.header = new HeaderView(this.model.state);
+    this.View = this.chooseView(this.model.getCurrentLevel());
+    this.content = new this.View(this.model.getCurrentLevel());
+    this.content.onAnswer = this.answer.bind(this);
+    this.results = new ResultView(this.model.state.answers);
+    this.footer = new FooterView();
 
-const onUserAnswer = (answer) => {
-  gameState.answers.push({isCorrect: answer, time: 15});
-  if (!answer) {
-    gameState.lives--;
+    this.root = document.createElement(`div`);
+    this.root.appendChild(this.header.element);
+    this.root.appendChild(this.content.element);
+    this.root.appendChild(this.results.element);
+    this.root.appendChild(this.footer.element);
+    this._interval = null;
   }
-  if (gameState.answers.length === MAX_ANSWERS || gameState.lives === 0) {
-    changeView(endScreen);
-  } else {
-    renderGame(gameLevels[getRandomNumber(0, 2)]);
+
+  get element() {
+    return this.root;
   }
-};
+  // не нравится эта функция
+  chooseView(level) {
+    // из вьюшек выбираем ту, которая соответствует типу лвла
+    return views[level.type];
+  }
 
-gameLevels.forEach((level) => {
-  level.onAnswer = onUserAnswer;
-});
+  answer(answer) {
+    this.stopGame();
+    switch (answer) {
+      case true:
+        this.model.getAnswer(answer);
+        if (this.model.hasNextLevel()) {
+          this.model.nextLevel();
+          this.startGame();
+        } else {
+          this.model.state.victory = true;
+          totalResults.unshift(this.model.state);
+          Application.showStats(totalResults);
+        }
+        break;
+      case false:
+        this.model.die();
+        this.model.getAnswer(answer);
+        if (!this.model.isDead()) {
+          this.model.nextLevel();
+          this.startGame();
+        } else {
+          totalResults.unshift(this.model.state);
+          Application.showStats(totalResults);
+        }
+        break;
+    }
+  }
 
-renderGame(gameLevels[getRandomNumber(0, 2)]);
+  startGame() {
+    this.changeLevel();
 
-export default gameScreen;
+    this._interval = setInterval(() => {
+      this.model.tick();
+      if (this.model.state.time <= 0) {
+        this.stopGame();
+        this.answer(false);
+      }
+      this.updateHeader();
+    }, 1000);
+  }
+
+  stopGame() {
+    clearInterval(this._interval);
+  }
+
+  restartGame() {
+    this.model.restart();
+  }
+
+  updateHeader() {
+    const header = new HeaderView(this.model.state);
+    this.root.replaceChild(header.element, this.header.element);
+    this.header = header;
+  }
+
+  updateResults() {
+    const results = new ResultView(this.model.state.answers);
+    this.root.replaceChild(results.element, this.results.element);
+    this.results = results;
+  }
+
+  changeLevel() {
+    this.model.restartTime();
+    // с переменной View забористо получилось
+    this.View = this.chooseView(this.model.getCurrentLevel());
+    const level = new this.View(this.model.getCurrentLevel());
+    level.onAnswer = this.answer.bind(this);
+    this.changeContentView(level);
+    this.updateResults();
+    this.updateHeader();
+  }
+
+  changeContentView(view) {
+    this.root.replaceChild(view.element, this.content.element);
+    this.content = view;
+  }
+}
+
+export default GameScreen;

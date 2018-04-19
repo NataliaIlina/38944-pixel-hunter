@@ -4,7 +4,7 @@ class GameFirstView extends AbstractView {
   constructor(level) {
     super();
     this.images = level.images;
-    this.question = level.task;
+    this.question = level.question;
   }
 
   get template() {

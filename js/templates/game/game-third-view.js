@@ -5,7 +5,7 @@ class GameThirdView extends AbstractView {
     super();
     this.level = level;
     this.images = level.images;
-    this.question = level.task;
+    this.question = level.question;
   }
 
   get template() {
