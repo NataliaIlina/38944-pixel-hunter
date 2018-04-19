@@ -1,4 +1,3 @@
-import renderGreetingScreen from './templates/intro/intro-screen';
-import {changeView} from './utils/util';
+import Application from './application';
 
-changeView(renderGreetingScreen().element);
+Application.showIntro();
