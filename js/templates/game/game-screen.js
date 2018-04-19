@@ -66,15 +66,21 @@ class GameScreen {
     this.stopGame();
     this.model.getAnswer(answer);
 
-    if (!answer) {
-      this.model.die();
-    }
-
-    if (!this.model.isDead() && this.model.hasNextLevel()) {
-      this.model.nextLevel();
-      this.startGame();
+    if (answer) {
+      if (this.model.hasNextLevel()) {
+        this.model.nextLevel();
+        this.startGame();
+      } else {
+        this.endGame();
+      }
     } else {
-      this.endGame();
+      if (!this.model.isDead() && this.model.hasNextLevel()) {
+        this.model.die();
+        this.model.nextLevel();
+        this.startGame();
+      } else {
+        this.endGame();
+      }
     }
   }
 
