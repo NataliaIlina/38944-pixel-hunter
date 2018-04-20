@@ -1,5 +1,4 @@
 import AbstractView from '../../utils/abstract-view';
-import Application from '../../application';
 
 class HeaderView extends AbstractView {
   constructor(game) {
@@ -25,8 +24,12 @@ class HeaderView extends AbstractView {
 
   bind() {
     this.element.querySelector(`.back`).addEventListener(`click`, () => {
-      Application.showGreeting();
+      this.onBackButtonClick();
     });
+  }
+
+  onBackButtonClick() {
+
   }
 }
 

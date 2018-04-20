@@ -4,6 +4,7 @@ import GameThirdView from './game-third-view.js';
 import HeaderView from '../header/header-view.js';
 import ResultView from '../result-view.js';
 import FooterView from '../footer/footer-view';
+import ModalView from './modal-view';
 import Application from '../../application';
 
 const views = {
@@ -33,7 +34,7 @@ const totalResults = [
 class GameScreen {
   constructor(model) {
     this.model = model;
-    this.header = new HeaderView(this.model.state);
+    this.header = this.renderHeader();
     this.View = this.chooseView(this.model.getCurrentLevel());
     this.content = new this.View(this.model.getCurrentLevel());
     this.content.onAnswer = this.answer.bind(this);
@@ -56,12 +57,68 @@ class GameScreen {
     // из вьюшек выбираем ту, которая соответствует типу лвла
     return views[level.type];
   }
-
+  // собираем хэдер + обработчики
+  renderHeader() {
+    const header = new HeaderView(this.model.state);
+    header.onBackButtonClick = () => {
+      this.stopGame();
+      this.root.appendChild(this.renderModal().element);
+    };
+    if (this.model.state.time <= 5) {
+      header.element.querySelector(`.game__timer`).classList.add(`blinker`);
+    }
+    return header;
+  }
+  // собираем модалку + обработчики
+  renderModal() {
+    const modal = new ModalView();
+    modal.onResetClick = () => {
+      this.endGame();
+      Application.showGreeting();
+      modal.element.remove();
+    };
+    modal.onContinueClick = () => {
+      this.continueGame();
+      modal.element.remove();
+    };
+    return modal;
+  }
+  // таймер для игры
+  startTimer() {
+    this._interval = setInterval(() => {
+      this.model.tick();
+      if (this.model.state.time <= 0) {
+        this.stopGame();
+        this.answer(false);
+      }
+      this.updateHeader();
+    }, 1000);
+  }
+  // инициализация игры - установка первоначальных параметров + старт игры
   init() {
     this.model.restart();
     this.startGame();
   }
 
+  startGame() {
+    this.changeLevel();
+    this.startTimer();
+  }
+
+  stopGame() {
+    clearInterval(this._interval);
+  }
+
+  continueGame() {
+    setInterval(this.startTimer());
+  }
+
+  endGame() {
+    totalResults.unshift(this.model.state);
+    Application.showStats(totalResults);
+    this.model.restart();
+  }
+  // обработка ответа пользователя
   answer(answer) {
     this.stopGame();
     this.model.getAnswer(answer);
@@ -83,45 +140,19 @@ class GameScreen {
       }
     }
   }
-
-  startGame() {
-    this.changeLevel();
-
-    this._interval = setInterval(() => {
-      this.model.tick();
-      if (this.model.state.time <= 0) {
-        this.stopGame();
-        this.answer(false);
-      }
-      this.updateHeader();
-    }, 1000);
-  }
-
-  endGame() {
-    totalResults.unshift(this.model.state);
-    Application.showStats(totalResults);
-    this.model.restart();
-  }
-
-  stopGame() {
-    clearInterval(this._interval);
-  }
-
+  // обновление хэдера
   updateHeader() {
-    const header = new HeaderView(this.model.state);
-    if (this.model.state.time <= 5) {
-      header.element.querySelector(`.game__timer`).classList.add(`blinker`);
-    }
+    const header = this.renderHeader();
     this.root.replaceChild(header.element, this.header.element);
     this.header = header;
   }
-
+  // обновление результатов
   updateResults() {
     const results = new ResultView(this.model.state.answers);
     this.root.replaceChild(results.element, this.results.element);
     this.results = results;
   }
-
+  // смена уровня
   changeLevel() {
     this.model.restartTime();
     // с переменной View забористо получилось
@@ -132,7 +163,7 @@ class GameScreen {
     this.updateResults();
     this.updateHeader();
   }
-
+  // смена игрового экрана
   changeContentView(view) {
     this.root.replaceChild(view.element, this.content.element);
     this.content = view;

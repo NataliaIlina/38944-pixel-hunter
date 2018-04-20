@@ -1,0 +1,40 @@
+.modal {
+  box-sizing: border-box;
+  width: 400px;
+  height: 250px;
+  background-color: white;
+  padding: 20px;
+  position: fixed;
+  top: 100px;
+  left: calc(50% - 200px);
+  text-align: center;
+  border-radius: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-content: center;
+}
+
+.modal__title {
+  margin: 0;
+  margin-bottom: 20px;
+}
+
+.modal__button {
+  margin: 0 20px;
+  width: 140px;
+  padding: 6px 0;
+  background-color: #a8c8c4;
+  border-radius: 10px;
+  border: 2px solid #a8c8c4;
+  font: inherit;
+  font-size: 20px;
+  cursor: pointer;
+  text-transform: uppercase;
+
+  &:hover,
+  &:focus {
+    background-color: white;
+    outline: none;
+  }
+}

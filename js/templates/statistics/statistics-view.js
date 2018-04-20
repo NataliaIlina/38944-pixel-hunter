@@ -3,6 +3,7 @@ import StatsView from './stats-view';
 import {BonusPoint} from '../../data/count-points';
 import getElementFromTemplate from '../../utils/create-elem';
 import HeaderView from '../header/header-view';
+import Application from '../../application';
 
 class StatisticsView extends AbstractView {
   constructor(results) {
@@ -23,9 +24,17 @@ class StatisticsView extends AbstractView {
       </div>`;
   }
 
+  addHeader() {
+    const header = new HeaderView();
+    header.onBackButtonClick = () => {
+      Application.showGreeting();
+    };
+    return header.element;
+  }
+
   render() {
     const element = getElementFromTemplate(this.template);
-    element.insertAdjacentElement(`afterbegin`, new HeaderView().element);
+    element.insertAdjacentElement(`afterbegin`, this.addHeader());
     return element;
   }
 }

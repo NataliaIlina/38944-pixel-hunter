@@ -30,9 +30,17 @@ class RulesView extends AbstractView {
     ${new FooterView().template}`;
   }
 
+  addHeader() {
+    const header = new HeaderView();
+    header.onBackButtonClick = () => {
+      Application.showGreeting();
+    };
+    return header.element;
+  }
+
   render() {
     const element = getElementFromTemplate(this.template);
-    element.insertAdjacentElement(`afterbegin`, new HeaderView().element);
+    element.insertAdjacentElement(`afterbegin`, this.addHeader());
     return element;
   }
 
