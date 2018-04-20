@@ -1,5 +1,5 @@
 import {INITIAL_LEVEL_TIME, GAME_LEVELS, INITIAL_GAME} from './game-data';
-import {changeLevel, die, tick, restartTime} from './game-logic';
+import {changeLevel} from './game-logic';
 
 const getLevel = (num) => GAME_LEVELS[num];
 // модель игры, обрабатывает данные
@@ -14,11 +14,12 @@ class GameModel {
   }
   // инициализация данных
   restart() {
-    this._state = INITIAL_GAME;
+    this._state = Object.assign({}, INITIAL_GAME);
+    this._state.answers = [];
   }
   // обновляет значение поля time на исходное
   restartTime() {
-    this._state = restartTime(this._state);
+    this._state.time = INITIAL_LEVEL_TIME;
   }
   // условие выхода из игры
   isDead() {
@@ -26,7 +27,8 @@ class GameModel {
   }
   // потеря одной жизни
   die() {
-    this._state = die(this._state);
+    // this._state = die(this._state);
+    this._state.lives--;
   }
   // есть ли следующий лвл
   hasNextLevel() {
@@ -48,7 +50,7 @@ class GameModel {
   }
   // уменьшает значение поля time на 1
   tick() {
-    this._state = tick(this._state);
+    this._state.time--;
   }
 }
 

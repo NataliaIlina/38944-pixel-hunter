@@ -1,4 +1,7 @@
+const INITIAL_LEVEL = 0;
 const INITIAL_LEVEL_TIME = 30;
+const MAX_LIVES = 3;
+
 const GAME_LEVELS = [
   {
     type: `two-images`,
@@ -146,11 +149,9 @@ const GAME_LEVELS = [
 ];
 
 const INITIAL_GAME = Object.freeze({
-  level: 0,
+  level: INITIAL_LEVEL,
   time: INITIAL_LEVEL_TIME,
-  lives: 3,
-  victory: false,
-  answers: []
+  lives: MAX_LIVES
 });
 
 export {INITIAL_LEVEL_TIME, GAME_LEVELS, INITIAL_GAME};

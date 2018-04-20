@@ -58,7 +58,7 @@ class GameScreen {
   }
 
   init() {
-    this.restartGame();
+    this.model.restart();
     this.startGame();
   }
 
@@ -100,18 +100,18 @@ class GameScreen {
   endGame() {
     totalResults.unshift(this.model.state);
     Application.showStats(totalResults);
+    this.model.restart();
   }
 
   stopGame() {
     clearInterval(this._interval);
   }
 
-  restartGame() {
-    this.model.restart();
-  }
-
   updateHeader() {
     const header = new HeaderView(this.model.state);
+    if (this.model.state.time <= 5) {
+      header.element.querySelector(`.game__timer`).classList.add(`blinker`);
+    }
     this.root.replaceChild(header.element, this.header.element);
     this.header = header;
   }
