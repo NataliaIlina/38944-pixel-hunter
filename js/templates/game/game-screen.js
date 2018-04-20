@@ -113,9 +113,11 @@ class GameScreen {
     setInterval(this.startTimer());
   }
 
-  endGame() {
-    totalResults.unshift(this.model.state);
-    Application.showStats(totalResults);
+  endGame(save) {
+    if (save) {
+      totalResults.unshift(this.model.state);
+      Application.showStats(totalResults);
+    }
     this.model.restart();
   }
   // обработка ответа пользователя
@@ -128,7 +130,7 @@ class GameScreen {
         this.model.nextLevel();
         this.startGame();
       } else {
-        this.endGame();
+        this.endGame(true);
       }
     } else {
       if (!this.model.isDead() && this.model.hasNextLevel()) {
@@ -136,7 +138,7 @@ class GameScreen {
         this.model.nextLevel();
         this.startGame();
       } else {
-        this.endGame();
+        this.endGame(true);
       }
     }
   }
