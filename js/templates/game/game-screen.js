@@ -1,8 +1,8 @@
-import GameFirstView from './game-first-view.js';
-import GameSecondView from './game-second-view.js';
-import GameThirdView from './game-third-view.js';
-import HeaderView from '../header/header-view.js';
-import ResultView from '../result-view.js';
+import GameFirstView from './game-first-view';
+import GameSecondView from './game-second-view';
+import GameThirdView from './game-third-view';
+import HeaderView from '../header/header-view';
+import ResultView from '../result/result-view';
 import FooterView from '../footer/footer-view';
 import ModalView from './modal-view';
 import Application from '../../application';
@@ -33,38 +33,40 @@ const totalResults = [
 
 class GameScreen {
   constructor(model) {
-    this.model = model;
-    this.header = this.renderHeader();
-    this.View = this.chooseView(this.model.getCurrentLevel());
-    this.content = new this.View(this.model.getCurrentLevel());
-    this.content.onAnswer = this.answer.bind(this);
-    this.results = new ResultView(this.model.state.answers);
-    this.footer = new FooterView();
+    this._model = model;
+    this._header = this.renderHeader();
+    this._content = this.renderLevel(this._model.currentLevel);
+    this._results = new ResultView(this._model.state.answers);
+    this._footer = new FooterView();
 
-    this.root = document.createElement(`div`);
-    this.root.appendChild(this.header.element);
-    this.root.appendChild(this.content.element);
-    this.root.appendChild(this.results.element);
-    this.root.appendChild(this.footer.element);
+    this._root = document.createElement(`div`);
+    this._root.appendChild(this._header.element);
+    this._root.appendChild(this._content.element);
+    this._root.appendChild(this._results.element);
+    this._root.appendChild(this._footer.element);
     this._interval = null;
   }
 
   get element() {
-    return this.root;
+    return this._root;
   }
-  // не нравится эта функция
-  chooseView(level) {
-    // из вьюшек выбираем ту, которая соответствует типу лвла
-    return views[level.type];
+
+  renderLevel(level) {
+    // получаем нужную вьюшку
+    const View = views[level.type];
+    const content = new View(level);
+    content.onAnswer = this.onAnswer.bind(this);
+    return content;
   }
+
   // собираем хэдер + обработчики
   renderHeader() {
-    const header = new HeaderView(this.model.state);
+    const header = new HeaderView(this._model.state);
     header.onBackButtonClick = () => {
       this.stopGame();
-      this.root.appendChild(this.renderModal().element);
+      this._root.appendChild(this.renderModal().element);
     };
-    if (this.model.state.time <= 5) {
+    if (this._model.state.time <= 5) {
       header.element.querySelector(`.game__timer`).classList.add(`blinker`);
     }
     return header;
@@ -86,17 +88,17 @@ class GameScreen {
   // таймер для игры
   startTimer() {
     this._interval = setInterval(() => {
-      this.model.tick();
-      if (this.model.state.time <= 0) {
+      this._model.tick();
+      if (this._model.state.time <= 0) {
         this.stopGame();
-        this.answer(false);
+        this.onAnswer(false);
       }
       this.updateHeader();
     }, 1000);
   }
   // инициализация игры - установка первоначальных параметров + старт игры
   init() {
-    this.model.restart();
+    this._model.restart();
     this.startGame();
   }
 
@@ -110,65 +112,55 @@ class GameScreen {
   }
 
   continueGame() {
-    setInterval(this.startTimer());
+    this.startTimer();
   }
 
   endGame(save) {
     if (save) {
-      totalResults.unshift(this.model.state);
+      totalResults.unshift(this._model.state);
       Application.showStats(totalResults);
     }
-    this.model.restart();
+    this._model.restart();
   }
   // обработка ответа пользователя
-  answer(answer) {
+  onAnswer(answer) {
     this.stopGame();
-    this.model.getAnswer(answer);
+    this._model.getAnswer(answer);
 
-    if (answer) {
-      if (this.model.hasNextLevel()) {
-        this.model.nextLevel();
-        this.startGame();
-      } else {
-        this.endGame(true);
-      }
+    if (!this._model.hasNextLevel() || this._model.isDead() && !answer) {
+      this.endGame(true);
+    } else if (!answer) {
+      this._model.die();
+      this._model.nextLevel();
+      this.startGame();
     } else {
-      if (!this.model.isDead() && this.model.hasNextLevel()) {
-        this.model.die();
-        this.model.nextLevel();
-        this.startGame();
-      } else {
-        this.endGame(true);
-      }
+      this._model.nextLevel();
+      this.startGame();
     }
   }
   // обновление хэдера
   updateHeader() {
     const header = this.renderHeader();
-    this.root.replaceChild(header.element, this.header.element);
-    this.header = header;
+    this._root.replaceChild(header.element, this._header.element);
+    this._header = header;
   }
   // обновление результатов
   updateResults() {
-    const results = new ResultView(this.model.state.answers);
-    this.root.replaceChild(results.element, this.results.element);
-    this.results = results;
-  }
-  // смена уровня
-  changeLevel() {
-    this.model.restartTime();
-    // с переменной View забористо получилось
-    this.View = this.chooseView(this.model.getCurrentLevel());
-    const level = new this.View(this.model.getCurrentLevel());
-    level.onAnswer = this.answer.bind(this);
-    this.changeContentView(level);
-    this.updateResults();
-    this.updateHeader();
+    const results = new ResultView(this._model.state.answers);
+    this._root.replaceChild(results.element, this._results.element);
+    this._results = results;
   }
   // смена игрового экрана
   changeContentView(view) {
-    this.root.replaceChild(view.element, this.content.element);
-    this.content = view;
+    this._root.replaceChild(view.element, this._content.element);
+    this._content = view;
+  }
+  // смена уровня
+  changeLevel() {
+    this._model.restartTime();
+    this.changeContentView(this.renderLevel(this._model.currentLevel));
+    this.updateResults();
+    this.updateHeader();
   }
 }
 

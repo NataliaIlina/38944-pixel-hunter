@@ -1,5 +1,4 @@
-import {INITIAL_LEVEL_TIME, GAME_LEVELS, INITIAL_GAME} from './game-data';
-import {changeLevel} from './game-logic';
+import {Initial, GAME_LEVELS, INITIAL_GAME} from './game-data';
 
 const getLevel = (num) => GAME_LEVELS[num];
 // модель игры, обрабатывает данные
@@ -12,14 +11,14 @@ class GameModel {
   get state() {
     return this._state;
   }
+  // состояние текущего уровня
+  get currentLevel() {
+    return getLevel(this._state.level);
+  }
   // инициализация данных
   restart() {
     this._state = Object.assign({}, INITIAL_GAME);
     this._state.answers = [];
-  }
-  // обновляет значение поля time на исходное
-  restartTime() {
-    this._state.time = INITIAL_LEVEL_TIME;
   }
   // условие выхода из игры
   isDead() {
@@ -27,7 +26,6 @@ class GameModel {
   }
   // потеря одной жизни
   die() {
-    // this._state = die(this._state);
     this._state.lives--;
   }
   // есть ли следующий лвл
@@ -36,21 +34,21 @@ class GameModel {
   }
   // переключение на след лвл
   nextLevel() {
-    this._state = changeLevel(this._state, this._state.level + 1);
-  }
-  // состояние текущего уровня
-  getCurrentLevel() {
-    return getLevel(this._state.level);
+    this._state.level++;
   }
   // обработка ответа пользователя
   getAnswer(answer) {
     this._state.answers.push(
-        {isCorrect: answer, time: INITIAL_LEVEL_TIME - this._state.time}
+        {isCorrect: answer, time: Initial.TIME - this._state.time}
     );
   }
   // уменьшает значение поля time на 1
   tick() {
     this._state.time--;
+  }
+  // обновляет значение поля time на исходное
+  restartTime() {
+    this._state.time = Initial.TIME;
   }
 }
 

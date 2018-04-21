@@ -1,6 +1,14 @@
-const INITIAL_LEVEL = 0;
-const INITIAL_LEVEL_TIME = 30;
-const MAX_LIVES = 3;
+const Initial = {
+  LEVEL: 0,
+  TIME: 30,
+  LIVES: 3
+};
+
+const INITIAL_GAME = Object.freeze({
+  level: Initial.LEVEL,
+  time: Initial.TIME,
+  lives: Initial.LIVES
+});
 
 const GAME_LEVELS = [
   {
@@ -148,10 +156,5 @@ const GAME_LEVELS = [
   }
 ];
 
-const INITIAL_GAME = Object.freeze({
-  level: INITIAL_LEVEL,
-  time: INITIAL_LEVEL_TIME,
-  lives: MAX_LIVES
-});
 
-export {INITIAL_LEVEL_TIME, GAME_LEVELS, INITIAL_GAME};
+export {Initial, GAME_LEVELS, INITIAL_GAME};
