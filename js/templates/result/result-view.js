@@ -1,4 +1,5 @@
 import AbstractView from '../../utils/abstract-view';
+import {BonusTime} from '../../data/count-points';
 
 class ResultView extends AbstractView {
   constructor(answers) {
@@ -21,10 +22,10 @@ class ResultView extends AbstractView {
     if (answer.isCorrect) {
       type = `correct`;
     }
-    if (answer.isCorrect && answer.time < 10) {
+    if (answer.isCorrect && answer.time < BonusTime.FAST) {
       type = `fast`;
     }
-    if (answer.isCorrect && answer.time > 20) {
+    if (answer.isCorrect && answer.time > BonusTime.SLOW) {
       type = `slow`;
     }
     if (!answer.isCorrect) {

@@ -1,5 +1,7 @@
 import AbstractView from '../../utils/abstract-view';
 
+const MAX_CHECKED_NUMBER = 2;
+
 class GameFirstView extends AbstractView {
   constructor(level) {
     super();
@@ -45,12 +47,14 @@ class GameFirstView extends AbstractView {
     const form = this.element.querySelector(`.game__content`);
 
     form.addEventListener(`change`, () => {
+      // кол-во чекнутых кнопок
       const checkedButtons = form.querySelectorAll(`input[type="radio"]:checked`);
-      if (checkedButtons.length === 2) {
-        const answer1 = form.querySelector(`input[name=question1]:checked`);
-        const answer2 = form.querySelector(`input[name=question2]:checked`);
-        if (answer1 && answer2) {
-          const answer = answer1.value === this._images[0].type && answer2.value === this._images[1].type;
+      // если 2 - проверяем ответы
+      if (checkedButtons.length === MAX_CHECKED_NUMBER) {
+        const answerFirst = form.querySelector(`input[name=question1]:checked`);
+        const answerSecond = form.querySelector(`input[name=question2]:checked`);
+        if (answerFirst && answerSecond) {
+          const answer = answerFirst.value === this._images[0].type && answerSecond.value === this._images[1].type;
           this.onAnswer(answer);
         }
         form.reset();

@@ -5,6 +5,8 @@ import getElementFromTemplate from '../../utils/create-elem';
 import HeaderView from '../header/header-view';
 import Application from '../../application';
 
+const MIN_ANWSERS_FOR_WIN = 7;
+
 class StatisticsView extends AbstractView {
   constructor(results) {
     super();
@@ -19,7 +21,7 @@ class StatisticsView extends AbstractView {
 
   get template() {
     return `<div class="result">
-      <h1>${this._rightAnswers >= 7 ? `Победа!` : `Поражение :(`}</h1>
+      <h1>${this._rightAnswers >= MIN_ANWSERS_FOR_WIN ? `Победа!` : `Поражение :(`}</h1>
       ${this._stats}
       </div>`;
   }

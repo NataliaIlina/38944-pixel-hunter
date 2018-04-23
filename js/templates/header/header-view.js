@@ -1,4 +1,5 @@
 import AbstractView from '../../utils/abstract-view';
+import {Initial} from '../game/game-data.js';
 
 class HeaderView extends AbstractView {
   constructor(game) {
@@ -16,7 +17,7 @@ class HeaderView extends AbstractView {
       </div>
       ${this._game ? `<h1 class="game__timer">${this._game.time}</h1>
       <div class="game__lives">
-        ${new Array(3 - this._game.lives).fill(`<img src="img/heart__empty.svg" class="game__heart" alt="Life" width="32" height="32">`).join(``)}
+        ${new Array(Initial.LIVES - this._game.lives).fill(`<img src="img/heart__empty.svg" class="game__heart" alt="Life" width="32" height="32">`).join(``)}
         ${new Array(this._game.lives).fill(`<img src="img/heart__full.svg" class="game__heart" alt="Life" width="32" height="32">`).join(``)}
       </div>` : ``}
       </header>`;

@@ -7,6 +7,7 @@ import FooterView from '../footer/footer-view';
 import ModalView from './modal-view';
 import Application from '../../application';
 
+const LITTLE_TIME = 5;
 const views = {
   'two-images': GameFirstView,
   'one-image': GameSecondView,
@@ -66,7 +67,7 @@ class GameScreen {
       this.stopGame();
       this._root.appendChild(this.renderModal().element);
     };
-    if (this._model.state.time <= 5) {
+    if (this._model.state.time <= LITTLE_TIME) {
       header.element.querySelector(`.game__timer`).classList.add(`blinker`);
     }
     return header;

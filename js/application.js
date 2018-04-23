@@ -29,7 +29,8 @@ class Application {
   }
 
   static showGame(playerName) {
-    const gameScreen = new GameScreen(new GameModel(playerName));
+    const gameModel = new GameModel(playerName);
+    const gameScreen = new GameScreen(gameModel);
     changeView(gameScreen.element);
     gameScreen.init();
   }
