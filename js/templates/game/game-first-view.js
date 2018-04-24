@@ -1,18 +1,20 @@
-import AbstractView from '../../utils/abstract-view.js';
+import AbstractView from '../../utils/abstract-view';
+
+const MAX_CHECKED_NUMBER = 2;
 
 class GameFirstView extends AbstractView {
   constructor(level) {
     super();
-    this.images = level.images;
-    this.question = level.task;
+    this._images = level.images;
+    this._question = level.question;
   }
 
   get template() {
     return `<div class="game">
-      <p class="game__task">${this.question}</p>
+      <p class="game__task">${this._question}</p>
       <form class="game__content">
         <div class="game__option">
-          <img src="${this.images[0].src}" alt="Option 1" width="468" height="458">
+          <img src="${this._images[0].src}" alt="Option 1" width="468" height="458">
           <label class="game__answer game__answer--photo">
             <input name="question1" type="radio" value="photo">
             <span>Фото</span>
@@ -23,7 +25,7 @@ class GameFirstView extends AbstractView {
           </label>
         </div>
         <div class="game__option">
-          <img src="${this.images[1].src}" alt="Option 2" width="468" height="458">
+          <img src="${this._images[1].src}" alt="Option 2" width="468" height="458">
           <label class="game__answer  game__answer--photo">
             <input name="question2" type="radio" value="photo">
             <span>Фото</span>
@@ -45,12 +47,14 @@ class GameFirstView extends AbstractView {
     const form = this.element.querySelector(`.game__content`);
 
     form.addEventListener(`change`, () => {
+      // кол-во чекнутых кнопок
       const checkedButtons = form.querySelectorAll(`input[type="radio"]:checked`);
-      if (checkedButtons.length === 2) {
-        const answer1 = form.querySelector(`input[name=question1]:checked`);
-        const answer2 = form.querySelector(`input[name=question2]:checked`);
-        if (answer1 && answer2) {
-          const answer = answer1.value === this.images[0].type && answer2.value === this.images[1].type;
+      // если 2 - проверяем ответы
+      if (checkedButtons.length === MAX_CHECKED_NUMBER) {
+        const answerFirst = form.querySelector(`input[name=question1]:checked`);
+        const answerSecond = form.querySelector(`input[name=question2]:checked`);
+        if (answerFirst && answerSecond) {
+          const answer = answerFirst.value === this._images[0].type && answerSecond.value === this._images[1].type;
           this.onAnswer(answer);
         }
         form.reset();

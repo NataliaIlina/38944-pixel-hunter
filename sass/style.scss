@@ -34,3 +34,13 @@ a {
   background-color: transparent;
   cursor: pointer;
 }
+
+.blinker {
+  animation: blinker 1s ease-in-out infinite;
+}
+
+@keyframes blinker {
+  from { color: black; }
+  50% { color: red; }
+  to { color: black; }
+}

@@ -1,3 +1,4 @@
+const MAX_ANSWERS_NUMBER = 10;
 const BonusTime = {
   FAST: 10,
   SLOW: 20
@@ -13,7 +14,7 @@ const countAnswers = (result) => {
   if (!Array.isArray(result.answers)) {
     throw new Error(`Ожидается получить массив с ответами`);
   }
-  if (result.answers.length < 10) {
+  if (result.answers.length < MAX_ANSWERS_NUMBER) {
     return false;
   }
   // считаем правильные ответы
@@ -45,4 +46,4 @@ const countPoints = (answers) => {
   return points;
 };
 
-export {countPoints, countAnswers, BonusPoint};
+export {countPoints, countAnswers, BonusPoint, BonusTime};

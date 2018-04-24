@@ -1,9 +1,10 @@
 import AbstractView from '../../utils/abstract-view';
+import {Initial} from '../game/game-data.js';
 
 class HeaderView extends AbstractView {
   constructor(game) {
     super();
-    this.game = game;
+    this._game = game;
   }
 
   get template() {
@@ -14,21 +15,21 @@ class HeaderView extends AbstractView {
           <img src="img/logo_small.svg" width="101" height="44">
         </button>
       </div>
-      ${this.game ? `<h1 class="game__timer">${this.game.time}</h1>
+      ${this._game ? `<h1 class="game__timer">${this._game.time}</h1>
       <div class="game__lives">
-        ${new Array(3 - this.game.lives).fill(`<img src="img/heart__empty.svg" class="game__heart" alt="Life" width="32" height="32">`).join(``)}
-        ${new Array(this.game.lives).fill(`<img src="img/heart__full.svg" class="game__heart" alt="Life" width="32" height="32">`).join(``)}
+        ${new Array(Initial.LIVES - this._game.lives).fill(`<img src="img/heart__empty.svg" class="game__heart" alt="Life" width="32" height="32">`).join(``)}
+        ${new Array(this._game.lives).fill(`<img src="img/heart__full.svg" class="game__heart" alt="Life" width="32" height="32">`).join(``)}
       </div>` : ``}
       </header>`;
   }
 
   bind() {
     this.element.querySelector(`.back`).addEventListener(`click`, () => {
-      this.onButtonClick();
+      this.onBackButtonClick();
     });
   }
 
-  onButtonClick() {
+  onBackButtonClick() {
 
   }
 }
