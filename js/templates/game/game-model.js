@@ -1,9 +1,9 @@
-import {Initial, GAME_LEVELS, INITIAL_GAME} from './game-data';
+import {Initial, INITIAL_GAME} from './game-data';
 
-const getLevel = (num) => GAME_LEVELS[num];
 // модель игры, обрабатывает данные
 class GameModel {
-  constructor(player) {
+  constructor(data, player) {
+    this.data = data;
     this.player = player;
     this.restart();
   }
@@ -13,7 +13,7 @@ class GameModel {
   }
   // состояние текущего уровня
   get currentLevel() {
-    return getLevel(this._state.level);
+    return this.data[this._state.level];
   }
   // инициализация данных
   restart() {
@@ -30,7 +30,7 @@ class GameModel {
   }
   // есть ли следующий лвл
   hasNextLevel() {
-    return getLevel(this._state.level + 1) !== void 0;
+    return this.data[this._state.level + 1] !== void 0;
   }
   // переключение на след лвл
   nextLevel() {
