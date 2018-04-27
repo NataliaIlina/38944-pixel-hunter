@@ -18,18 +18,12 @@ const countAnswers = (result) => {
     return false;
   }
   // считаем правильные ответы
-  const rightAnswers = result.answers.filter((answer) => {
-    return answer.isCorrect === true;
-  });
+  const rightAnswers = result.answers.filter((answer) => answer !== `wrong`);
   // считаем быстрые ответы
-  const fastAnswers = rightAnswers.filter((answer) => {
-    return answer.time < BonusTime.FAST;
-  });
+  const fastAnswers = rightAnswers.filter((answer) => answer === `fast`);
   // считаем долгие ответы
-  const slowAnswers = rightAnswers.filter((answer) => {
-    return answer.time > BonusTime.SLOW;
-  });
-  // общее кол-во набранных очков
+  const slowAnswers = rightAnswers.filter((answer) => answer === `slow`);
+  // общее кол-во ответов
   const AnswerResult = {
     RIGHT: rightAnswers.length,
     FAST: fastAnswers.length,

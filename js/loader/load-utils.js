@@ -1,10 +1,12 @@
 const checkStatus = (response) => {
   if (response.ok) {
-    return response.json();
+    return response;
   } else {
     throw new Error(`${response.status}: ${response.statusText}`);
   }
 };
+
+const toJSON = (response) => response.json();
 
 const onError = (error) => {
   const node = document.createElement(`div`);
@@ -35,11 +37,11 @@ const getImagesUrls = (data) => {
   return urls;
 };
 
-// грузим данные
-const loadData = () => {
-  return fetch(`https://es.dump.academy/pixel-hunter/questions`)
+// грузим данные с адреса
+const loadData = (url) => {
+  return fetch(url)
       .then(checkStatus)
-      .then((data) => data)
+      .then(toJSON)
       .catch(onError);
 };
 // промис под одну картинку
@@ -51,13 +53,5 @@ const loadImage = (url) => {
     image.src = url;
   });
 };
-// предзагрузка изображений
-const loadImages = (data) => {
-  const urls = getImagesUrls(data);
-  const promises = urls.map((url) => {
-    return loadImage(url);
-  });
-  return Promise.all(promises);
-};
 
-export {loadData, loadImages};
+export {checkStatus, onError, loadData, getImagesUrls, loadImage};

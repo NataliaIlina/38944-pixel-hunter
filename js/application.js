@@ -4,7 +4,7 @@ import RulesView from './templates/rules/rules-view';
 import GameScreen from './templates/game/game-screen';
 import GameModel from './templates/game/game-model';
 import StatisticsView from './templates/statistics/statistics-view';
-import {loadData, loadImages} from './utils/loader';
+import Loader from './loader/loader';
 
 const main = document.querySelector(`.central`);
 const changeView = (element) => {
@@ -18,12 +18,12 @@ class Application {
   static start() {
     const intro = new IntroView();
     changeView(intro.element);
-    loadData()
+    Loader.loadQuestions()
         .then((data) => {
           gameData = data;
           return data;
         })
-        .then((data) => loadImages(data))
+        .then((data) => Loader.preloadImages(data))
         // анимация исчезновения экрана
         .then(() => intro.remove())
         // появление экрана
@@ -51,9 +51,11 @@ class Application {
     gameScreen.init();
   }
 
-  static showStats(model) {
-    const statistics = new StatisticsView(model);
-    changeView(statistics.element);
+  static showStats(model, player) {
+    Loader.saveResults(model, player)
+        .then(() => Loader.loadResults(player))
+        .then((data) => new StatisticsView(data))
+        .then((elem) => changeView(elem.element));
   }
 }
 

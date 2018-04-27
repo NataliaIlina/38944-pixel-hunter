@@ -1,10 +1,12 @@
 import {Initial, INITIAL_GAME} from './game-data';
+import {getAnswerType, adaptData} from './game-logic';
+import Application from '../../application';
 
 // модель игры, обрабатывает данные
 class GameModel {
   constructor(data, player) {
-    this.data = data;
-    this.player = player;
+    this._data = data;
+    this._player = player;
     this.restart();
   }
   // возвращает состояние игры
@@ -13,7 +15,7 @@ class GameModel {
   }
   // состояние текущего уровня
   get currentLevel() {
-    return this.data[this._state.level];
+    return this._data[this._state.level];
   }
   // инициализация данных
   restart() {
@@ -30,7 +32,7 @@ class GameModel {
   }
   // есть ли следующий лвл
   hasNextLevel() {
-    return this.data[this._state.level + 1] !== void 0;
+    return this._data[this._state.level + 1] !== void 0;
   }
   // переключение на след лвл
   nextLevel() {
@@ -38,8 +40,9 @@ class GameModel {
   }
   // обработка ответа пользователя
   getAnswer(answer) {
+    const userAnswer = {isCorrect: answer, time: Initial.TIME - this._state.time};
     this._state.answers.push(
-        {isCorrect: answer, time: Initial.TIME - this._state.time}
+        getAnswerType(userAnswer)
     );
   }
   // уменьшает значение поля time на 1
@@ -49,6 +52,10 @@ class GameModel {
   // обновляет значение поля time на исходное
   restartTime() {
     this._state.time = Initial.TIME;
+  }
+
+  saveResults() {
+    Application.showStats(adaptData(this.state), this._player);
   }
 }
 
