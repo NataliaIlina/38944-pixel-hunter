@@ -14,4 +14,10 @@ const resize = (frame, image) => {
   return {width, height};
 };
 
+// const frameSize = {
+//   'two-of-two': {width: 468, height: 458},
+//   'tinder-like': {width: 705, height: 455},
+//   'one-of-three': {width: 304, height: 455}
+// };
+
 export {resize};
