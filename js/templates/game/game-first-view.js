@@ -5,7 +5,7 @@ const MAX_CHECKED_NUMBER = 2;
 class GameFirstView extends AbstractView {
   constructor(level) {
     super();
-    this._images = level.images;
+    this._answers = level.answers;
     this._question = level.question;
   }
 
@@ -14,24 +14,24 @@ class GameFirstView extends AbstractView {
       <p class="game__task">${this._question}</p>
       <form class="game__content">
         <div class="game__option">
-          <img src="${this._images[0].src}" alt="Option 1" width="468" height="458">
+          <img src="${this._answers[0].image.url}" alt="Option 1" width="468" height="458">
           <label class="game__answer game__answer--photo">
             <input name="question1" type="radio" value="photo">
             <span>Фото</span>
           </label>
           <label class="game__answer game__answer--paint">
-            <input name="question1" type="radio" value="paint">
+            <input name="question1" type="radio" value="painting">
             <span>Рисунок</span>
           </label>
         </div>
         <div class="game__option">
-          <img src="${this._images[1].src}" alt="Option 2" width="468" height="458">
+          <img src="${this._answers[1].image.url}" alt="Option 2" width="468" height="458">
           <label class="game__answer  game__answer--photo">
             <input name="question2" type="radio" value="photo">
             <span>Фото</span>
           </label>
           <label class="game__answer  game__answer--paint">
-            <input name="question2" type="radio" value="paint">
+            <input name="question2" type="radio" value="painting">
             <span>Рисунок</span>
           </label>
         </div>
@@ -54,7 +54,7 @@ class GameFirstView extends AbstractView {
         const answerFirst = form.querySelector(`input[name=question1]:checked`);
         const answerSecond = form.querySelector(`input[name=question2]:checked`);
         if (answerFirst && answerSecond) {
-          const answer = answerFirst.value === this._images[0].type && answerSecond.value === this._images[1].type;
+          const answer = answerFirst.value === this._answers[0].type && answerSecond.value === this._answers[1].type;
           this.onAnswer(answer);
         }
         form.reset();

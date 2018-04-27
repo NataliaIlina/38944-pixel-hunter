@@ -4,18 +4,34 @@ import RulesView from './templates/rules/rules-view';
 import GameScreen from './templates/game/game-screen';
 import GameModel from './templates/game/game-model';
 import StatisticsView from './templates/statistics/statistics-view';
+import {loadData, loadImages} from './utils/loader';
 
 const main = document.querySelector(`.central`);
 const changeView = (element) => {
   main.innerHTML = ``;
   main.appendChild(element);
 };
+let gameData;
 
 class Application {
 
-  static showIntro() {
+  static start() {
     const intro = new IntroView();
     changeView(intro.element);
+    loadData()
+        .then((data) => {
+          gameData = data;
+          return data;
+        })
+        .then((data) => loadImages(data))
+        // анимация исчезновения экрана
+        .then(() => intro.remove())
+        // появление экрана
+        .then(() => {
+          setTimeout(() => {
+            this.showGreeting();
+          }, 2000);
+        });
   }
 
   static showGreeting() {
@@ -29,7 +45,7 @@ class Application {
   }
 
   static showGame(playerName) {
-    const gameModel = new GameModel(playerName);
+    const gameModel = new GameModel(gameData, playerName);
     const gameScreen = new GameScreen(gameModel);
     changeView(gameScreen.element);
     gameScreen.init();

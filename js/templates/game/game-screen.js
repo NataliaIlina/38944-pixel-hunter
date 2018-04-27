@@ -9,9 +9,9 @@ import Application from '../../application';
 
 const LITTLE_TIME = 5;
 const views = {
-  'two-images': GameFirstView,
-  'one-image': GameSecondView,
-  'three-images': GameThirdView
+  'two-of-two': GameFirstView,
+  'tinder-like': GameSecondView,
+  'one-of-three': GameThirdView
 };
 
 const totalResults = [

@@ -39,8 +39,37 @@ a {
   animation: blinker 1s ease-in-out infinite;
 }
 
+.rotate {
+  animation: rotate 1.3s linear infinite;
+  transform-origin: center -8px;
+}
+
+.fade-in {
+  animation: fade-in 2s linear;
+}
+
+.fade-out {
+  animation: fade-out 2s linear;
+}
+
+
 @keyframes blinker {
   from { color: black; }
   50% { color: red; }
   to { color: black; }
+}
+
+@keyframes fade-out {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes rotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
 }
