@@ -14,24 +14,6 @@ const views = {
   'one-of-three': GameThirdView
 };
 
-const totalResults = [
-  {
-    level: 0,
-    time: 30,
-    lives: 1,
-    victory: true,
-    answers: new Array(10).fill({isCorrect: true, time: 5})
-  },
-  {
-    level: 0,
-    time: 30,
-    lives: 3,
-    victory: true,
-    answers: new Array(10).fill({isCorrect: true, time: 20})
-  }
-];
-
-
 class GameScreen {
   constructor(model) {
     this._model = model;
@@ -118,8 +100,8 @@ class GameScreen {
 
   endGame(save) {
     if (save) {
-      totalResults.unshift(this._model.state);
-      Application.showStats(totalResults);
+      this._model.saveResults();
+      // Application.showStats();
     }
     this._model.restart();
   }

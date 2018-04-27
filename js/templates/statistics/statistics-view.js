@@ -10,9 +10,9 @@ const MIN_ANWSERS_FOR_WIN = 7;
 class StatisticsView extends AbstractView {
   constructor(results) {
     super();
-    this._results = results;
+    this._results = results.reverse();
     // у последней попытки считаем кол-во правильных ответов
-    this._rightAnswers = this._results[0].answers.filter((answer) => answer.isCorrect).length;
+    this._rightAnswers = this._results[0].answers.filter((answer) => answer !== `wrong`).length;
     // превращаем массив в шаблоны
     this._stats = this._results.map((result, index) => {
       return new StatsView(result, BonusPoint, index + 1).template;

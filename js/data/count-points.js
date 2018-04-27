@@ -19,15 +19,15 @@ const countAnswers = (result) => {
   }
   // считаем правильные ответы
   const rightAnswers = result.answers.filter((answer) => {
-    return answer.isCorrect === true;
+    return answer !== `wrong`;
   });
   // считаем быстрые ответы
   const fastAnswers = rightAnswers.filter((answer) => {
-    return answer.time < BonusTime.FAST;
+    return answer === `fast`;
   });
   // считаем долгие ответы
   const slowAnswers = rightAnswers.filter((answer) => {
-    return answer.time > BonusTime.SLOW;
+    return answer === `slow`;
   });
   // общее кол-во набранных очков
   const AnswerResult = {
