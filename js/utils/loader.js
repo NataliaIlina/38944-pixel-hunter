@@ -28,18 +28,13 @@ const getImagesUrls = (data) => {
   const urls = [];
   // для каждого массива с ответами получаем url картинок
   answers.forEach((answer) => {
-    urls.push(...getUrl(answer));
+    answer.forEach((item) => {
+      urls.push(item.image.url);
+    });
   });
   return urls;
 };
-// из массива картитнок получаем адрес
-const getUrl = (array) => {
-  const urls = [];
-  array.forEach((item) => {
-    urls.push(item.image.url);
-  });
-  return urls;
-};
+
 // грузим данные
 const loadData = () => {
   return fetch(`https://es.dump.academy/pixel-hunter/questions`)
