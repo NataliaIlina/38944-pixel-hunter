@@ -1,6 +1,3 @@
-const SERVER_URL = `https://es.dump.academy/pixel-hunter`;
-const APP_ID = 30081986;
-const DEFAULT_NAME = `unknown_raccoon`;
 const checkStatus = (response) => {
   if (response.ok) {
     return response;
@@ -8,28 +5,8 @@ const checkStatus = (response) => {
     throw new Error(`${response.status}: ${response.statusText}`);
   }
 };
+
 const toJSON = (response) => response.json();
-
-const saveStats = (data, name = DEFAULT_NAME) => {
-  const settings = {
-    body: JSON.stringify(data),
-    headers: {
-      'Content-Type': `application/json`
-    },
-    method: `POST`
-  };
-  return fetch(`${SERVER_URL}/stats/${APP_ID}-${name}`, settings)
-      .then(checkStatus)
-      .catch(onError);
-};
-
-const loadResults = (name = DEFAULT_NAME) => {
-  return fetch(`${SERVER_URL}/stats/${APP_ID}-${name}`)
-      .then(checkStatus)
-      .then(toJSON)
-      .then((data) => data)
-      .catch(onError);
-};
 
 const onError = (error) => {
   const node = document.createElement(`div`);
@@ -60,12 +37,11 @@ const getImagesUrls = (data) => {
   return urls;
 };
 
-// грузим данные
-const loadData = () => {
-  return fetch(`${SERVER_URL}/questions`)
+// грузим данные с адреса
+const loadData = (url) => {
+  return fetch(url)
       .then(checkStatus)
       .then(toJSON)
-      .then((data) => data)
       .catch(onError);
 };
 // промис под одну картинку
@@ -77,13 +53,5 @@ const loadImage = (url) => {
     image.src = url;
   });
 };
-// предзагрузка изображений
-const loadImages = (data) => {
-  const urls = getImagesUrls(data);
-  const promises = urls.map((url) => {
-    return loadImage(url);
-  });
-  return Promise.all(promises);
-};
 
-export {loadData, loadImages, saveStats, loadResults};
+export {checkStatus, onError, loadData, getImagesUrls, loadImage};
