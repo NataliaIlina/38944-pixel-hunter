@@ -21,11 +21,10 @@ class Application {
     loadData()
         .then((data) => {
           gameData = data;
+          return data;
         })
-        // тут в консоли undefined и функция не срабатывает
-        .then((data) => console.log(data))
         .then((data) => loadImages(data))
-        .then(this.showGreeting());
+        .then(() => this.showGreeting());
   }
 
   static showGreeting() {
