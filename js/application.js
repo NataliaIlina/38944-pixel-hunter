@@ -24,7 +24,14 @@ class Application {
           return data;
         })
         .then((data) => loadImages(data))
-        .then(() => this.showGreeting());
+        // анимация исчезновения экрана
+        .then(() => intro.remove())
+        // появление экрана
+        .then(() => {
+          setTimeout(() => {
+            this.showGreeting();
+          }, 2000);
+        });
   }
 
   static showGreeting() {
