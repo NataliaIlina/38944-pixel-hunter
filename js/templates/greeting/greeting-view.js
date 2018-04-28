@@ -8,7 +8,7 @@ class GreetingView extends AbstractView {
   }
 
   get template() {
-    return `<div class="greeting central--blur fade-in">
+    return `<div class="greeting central--blur">
         <div class="greeting__logo"><img src="img/logo_big.png" width="201" height="89" alt="Pixel Hunter"></div>
         <h1 class="greeting__asterisk">*</h1>
         <div class="greeting__challenge">
@@ -28,6 +28,23 @@ class GreetingView extends AbstractView {
     this.element.querySelector(`.greeting__continue`).addEventListener(`click`, () => {
       Application.showRules();
     });
+  }
+
+  hide() {
+    this.element.children[0].style = `opacity: 0`;
+  }
+
+  show() {
+    this.element.children[0].style = ``;
+    this.element.children[0].classList.add(`fade-in`);
+  }
+
+  addLoader(loader) {
+    this.element.appendChild(loader);
+  }
+
+  removeLoader(loader) {
+    loader.remove();
   }
 }
 

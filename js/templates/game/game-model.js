@@ -5,8 +5,8 @@ import Application from '../../application';
 // модель игры, обрабатывает данные
 class GameModel {
   constructor(data, player) {
-    this._data = data;
-    this._player = player;
+    this.data = data;
+    this.player = player;
     this.restart();
   }
   // возвращает состояние игры
@@ -15,7 +15,7 @@ class GameModel {
   }
   // состояние текущего уровня
   get currentLevel() {
-    return this._data[this._state.level];
+    return this.data[this._state.level];
   }
   // инициализация данных
   restart() {
@@ -32,7 +32,7 @@ class GameModel {
   }
   // есть ли следующий лвл
   hasNextLevel() {
-    return this._data[this._state.level + 1] !== void 0;
+    return this.data[this._state.level + 1] !== void 0;
   }
   // переключение на след лвл
   nextLevel() {
@@ -55,7 +55,7 @@ class GameModel {
   }
 
   saveResults() {
-    Application.showStats(adaptData(this.state), this._player);
+    Application.showStats(adaptData(this.state), this.player);
   }
 }
 

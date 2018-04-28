@@ -6,6 +6,7 @@ import GameModel from './templates/game/game-model';
 import StatisticsView from './templates/statistics/statistics-view';
 import Loader from './loader/loader';
 
+const TIME_FOR_REMOVE_LOADER = 2000;
 const main = document.querySelector(`.central`);
 const changeView = (element) => {
   main.innerHTML = ``;
@@ -17,21 +18,21 @@ class Application {
 
   static start() {
     const intro = new IntroView();
-    changeView(intro.element);
+    const greeting = new GreetingView();
+    greeting.hide();
+    greeting.addLoader(intro.element);
+    changeView(greeting.element);
     Loader.loadQuestions()
         .then((data) => {
           gameData = data;
           return data;
         })
         .then((data) => Loader.preloadImages(data))
-        // анимация исчезновения экрана
-        .then(() => intro.remove())
-        // появление экрана
-        .then(() => {
-          setTimeout(() => {
-            this.showGreeting();
-          }, 2000);
-        });
+        .then(() => intro.hide())
+        .then(() => greeting.show())
+        .then(() => setTimeout(() => {
+          greeting.removeLoader(intro.element);
+        }, TIME_FOR_REMOVE_LOADER));
   }
 
   static showGreeting() {

@@ -9,20 +9,12 @@ const checkStatus = (response) => {
 const toJSON = (response) => response.json();
 
 const onError = (error) => {
-  const node = document.createElement(`div`);
-  node.style = `width: 180px;
-                position: absolute;
-                top: 50px;
-                left: calc(50% - 90px);
-                z-index: 20;
-                padding: 20px;
-                border-radius: 20px;
-                margin: 0 auto;
-                text-align: center;
-                background-color: red;`;
-  node.textContent = error;
-  document.body.insertAdjacentElement(`afterbegin`, node);
+  const element = document.createElement(`div`);
+  element.classList.add(`error`);
+  element.textContent = error;
+  document.body.insertAdjacentElement(`afterbegin`, element);
 };
+
 // получаем адреса картинок из данных
 const getImagesUrls = (data) => {
   // все ответы

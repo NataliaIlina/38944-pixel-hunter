@@ -1,18 +1,18 @@
-import {BonusTime} from '../../data/count-points';
+import {Result, BonusTime} from './game-data';
 
 const getAnswerType = (answer) => {
   let type;
   if (answer.isCorrect) {
-    type = `correct`;
+    type = Result.CORRECT;
   }
   if (answer.isCorrect && answer.time < BonusTime.FAST) {
-    type = `fast`;
+    type = Result.FAST;
   }
   if (answer.isCorrect && answer.time > BonusTime.SLOW) {
-    type = `slow`;
+    type = Result.SLOW;
   }
   if (!answer.isCorrect) {
-    type = `wrong`;
+    type = Result.WRONG;
   }
   return type;
 };

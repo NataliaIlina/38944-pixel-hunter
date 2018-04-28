@@ -1,4 +1,9 @@
 @import "colors";
+.intro-layout {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+}
 
 .intro {
   width: 800px;
@@ -7,6 +12,7 @@
   background-size: contain;
 
   position: relative;
+  transition: opacity 2s linear;
 }
 
 .intro__asterisk {

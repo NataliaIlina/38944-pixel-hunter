@@ -29,6 +29,19 @@ a {
   color: $main-font-color;
 }
 
+.error {
+  width: 180px;
+  position: absolute;
+  top: 50px;
+  left: calc(50% - 90px);
+  z-index: 20;
+  padding: 20px;
+  border-radius: 20px;
+  margin: 0 auto;
+  text-align: center;
+  background-color: red;
+}
+
 .back {
   border: 0;
   background-color: transparent;
@@ -48,20 +61,10 @@ a {
   animation: fade-in 2s linear;
 }
 
-.fade-out {
-  animation: fade-out 2s linear;
-}
-
-
 @keyframes blinker {
   from { color: black; }
   50% { color: red; }
   to { color: black; }
-}
-
-@keyframes fade-out {
-  from { opacity: 1; }
-  to { opacity: 0; }
 }
 
 @keyframes fade-in {

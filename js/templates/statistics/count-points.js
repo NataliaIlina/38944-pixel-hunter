@@ -1,8 +1,5 @@
+import {Result} from '../game/game-data';
 const MAX_ANSWERS_NUMBER = 10;
-const BonusTime = {
-  FAST: 10,
-  SLOW: 20
-};
 
 const BonusPoint = {
   ANSWER: 100,
@@ -18,11 +15,11 @@ const countAnswers = (result) => {
     return false;
   }
   // считаем правильные ответы
-  const rightAnswers = result.answers.filter((answer) => answer !== `wrong`);
+  const rightAnswers = result.answers.filter((answer) => answer !== Result.WRONG);
   // считаем быстрые ответы
-  const fastAnswers = rightAnswers.filter((answer) => answer === `fast`);
+  const fastAnswers = rightAnswers.filter((answer) => answer === Result.FAST);
   // считаем долгие ответы
-  const slowAnswers = rightAnswers.filter((answer) => answer === `slow`);
+  const slowAnswers = rightAnswers.filter((answer) => answer === Result.SLOW);
   // общее кол-во ответов
   const AnswerResult = {
     RIGHT: rightAnswers.length,
@@ -40,4 +37,4 @@ const countPoints = (answers) => {
   return points;
 };
 
-export {countPoints, countAnswers, BonusPoint, BonusTime};
+export {countPoints, countAnswers, BonusPoint};

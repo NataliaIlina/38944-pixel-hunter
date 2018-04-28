@@ -4,22 +4,27 @@ const Initial = {
   LIVES: 3
 };
 
-const QuestionType = {
-  TWO_OF_TWO: `two-of-two`,
-  TINDER_LIKE: `tinder-like`,
-  ONE_OF_THREE: `one-of-three`
-};
-
-const AnswerType = {
-  PAINTING: `painting`,
-  PHOTO: `photo`
-};
-
 const INITIAL_GAME = Object.freeze({
   level: Initial.LEVEL,
   time: Initial.TIME,
   lives: Initial.LIVES
 });
 
+const AnswerType = {
+  PAINTING: `painting`,
+  PHOTO: `photo`
+};
 
-export {Initial, QuestionType, AnswerType, INITIAL_GAME};
+const Result = {
+  CORRECT: `correct`,
+  WRONG: `wrong`,
+  FAST: `fast`,
+  SLOW: `slow`
+};
+
+const BonusTime = {
+  FAST: 10,
+  SLOW: 20
+};
+
+export {Initial, AnswerType, Result, BonusTime, INITIAL_GAME};
