@@ -1,5 +1,5 @@
 import AbstractView from '../../utils/abstract-view';
-import {countAnswers, countPoints} from '../../data/count-points';
+import {countAnswers, countPoints} from './count-points';
 import ResultView from '../result/result-view';
 
 class StatsView extends AbstractView {

@@ -1,6 +1,6 @@
 import AbstractView from '../../utils/abstract-view';
 import StatsView from './stats-view';
-import {BonusPoint} from '../../data/count-points';
+import {BonusPoint} from './count-points';
 import getElementFromTemplate from '../../utils/create-elem';
 import HeaderView from '../header/header-view';
 import Application from '../../application';
