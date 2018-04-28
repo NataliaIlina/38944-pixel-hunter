@@ -1,4 +1,5 @@
 import {checkStatus, onError, loadData, getImagesUrls, loadImage} from './load-utils';
+import {resize, frameSize} from '../data/resize';
 
 const SERVER_URL = `https://es.dump.academy/pixel-hunter`;
 const APP_ID = 30081986;
@@ -23,7 +24,24 @@ class Loader {
   }
 
   static loadQuestions() {
-    return loadData(`${SERVER_URL}/questions`);
+    return loadData(`${SERVER_URL}/questions`)
+    // меняем размер картинок по типу игры
+        .then((data) => {
+          data.forEach((question) => {
+            const type = question.type;
+            const answers = question.answers;
+            answers.forEach((answer) => {
+              const image = new Image();
+              image.src = answer.image.url;
+              image.onload = () => {
+                const newSize = resize(frameSize[type], {width: image.width, height: image.height});
+                answer.image.width = newSize.width;
+                answer.image.height = newSize.height;
+              };
+            });
+          });
+          return data;
+        });
   }
 
   static preloadImages(data) {

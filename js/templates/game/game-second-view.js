@@ -12,7 +12,7 @@ class GameSecondView extends AbstractView {
     <p class="game__task">${this._question}</p>
       <form class="game__content  game__content--wide">
         <div class="game__option">
-          <img src="${this._answers[0].image.url}" alt="Option 1" width="705" height="455">
+          <img src="${this._answers[0].image.url}" alt="Option 1" width="${this._answers[0].image.width}" height="${this._answers[0].image.height}">
           <label class="game__answer  game__answer--photo">
             <input name="question1" type="radio" value="photo">
             <span>Фото</span>
