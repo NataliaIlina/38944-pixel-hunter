@@ -48,20 +48,10 @@ a {
   animation: fade-in 2s linear;
 }
 
-.fade-out {
-  animation: fade-out 2s linear;
-}
-
-
 @keyframes blinker {
   from { color: black; }
   50% { color: red; }
   to { color: black; }
-}
-
-@keyframes fade-out {
-  from { opacity: 1; }
-  to { opacity: 0; }
 }
 
 @keyframes fade-in {
