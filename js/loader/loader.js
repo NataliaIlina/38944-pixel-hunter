@@ -1,5 +1,5 @@
 import {checkStatus, onError, loadData, getImagesUrls, loadImage} from './load-utils';
-import {resize, FrameSize} from '../utils/resize';
+import {resize, frameSize} from '../utils/resize';
 
 const SERVER_URL = `https://es.dump.academy/pixel-hunter`;
 const APP_ID = 30081986;
@@ -34,7 +34,7 @@ class Loader {
               const image = new Image();
               image.src = answer.image.url;
               image.onload = () => {
-                const newSize = resize(FrameSize[type], {width: image.width, height: image.height});
+                const newSize = resize(frameSize[type], {width: image.width, height: image.height});
                 answer.image.width = newSize.width;
                 answer.image.height = newSize.height;
               };
