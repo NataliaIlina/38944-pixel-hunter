@@ -28,6 +28,7 @@
   line-height: 35px;
 }
 
+
 .game__content {
   display: flex;
   flex-direction: row;
@@ -119,7 +120,6 @@
 
 .game__content--triple .game__option {
   cursor: pointer;
-
   width: 304px;
   height: 455px;
 
@@ -139,6 +139,10 @@
     height: 100%;
 
     background-color: rgba(223, 78, 78, 0.4);
+  }
+
+  img {
+    z-index: -1;
   }
 
 }
