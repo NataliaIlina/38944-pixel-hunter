@@ -3,10 +3,6 @@ import FooterView from '../footer/footer-view';
 import Application from '../../application';
 
 class GreetingView extends AbstractView {
-  constructor() {
-    super();
-  }
-
   get template() {
     return `<div class="greeting central--blur">
         <div class="greeting__logo"><img src="img/logo_big.png" width="201" height="89" alt="Pixel Hunter"></div>

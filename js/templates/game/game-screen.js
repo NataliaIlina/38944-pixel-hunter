@@ -114,10 +114,10 @@ class GameScreen {
       this._endGame(true);
     } else if (!answer) {
       this.model.die();
-      this.model.nextLevel();
+      this.model.changeLevel();
       this._startGame();
     } else {
-      this.model.nextLevel();
+      this.model.changeLevel();
       this._startGame();
     }
   }

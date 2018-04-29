@@ -6,10 +6,6 @@ import getElementFromTemplate from '../../utils/create-elem';
 
 
 class RulesView extends AbstractView {
-  constructor() {
-    super();
-  }
-
   get template() {
     return `<div class="rules">
       <h1 class="rules__title">Правила</h1>

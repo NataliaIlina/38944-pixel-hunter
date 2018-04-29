@@ -56,7 +56,8 @@ class Application {
     Loader.saveResults(model, player)
         .then(() => Loader.loadResults(player))
         .then((data) => new StatisticsView(data))
-        .then((elem) => changeView(elem.element));
+        .then((elem) => changeView(elem.element))
+        .catch(() => this.showGreeting());
   }
 }
 

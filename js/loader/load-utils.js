@@ -11,8 +11,13 @@ const toJSON = (response) => response.json();
 const onError = (error) => {
   const element = document.createElement(`div`);
   element.classList.add(`error`);
-  element.textContent = error;
+  element.textContent = `Произошла ошибка! ${error}`;
   document.body.insertAdjacentElement(`afterbegin`, element);
+  const onWindowClick = () => {
+    element.remove();
+    window.removeEventListener(onWindowClick);
+  };
+  window.addEventListener(`click`, onWindowClick);
 };
 
 // получаем адреса картинок из данных

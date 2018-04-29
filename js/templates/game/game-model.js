@@ -35,7 +35,7 @@ class GameModel {
     return this.data[this._state.level + 1] !== void 0;
   }
   // переключение на след лвл
-  nextLevel() {
+  changeLevel() {
     this._state.level++;
   }
   // обработка ответа пользователя
