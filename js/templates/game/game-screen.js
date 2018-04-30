@@ -6,8 +6,8 @@ import ResultView from '../result/result-view';
 import FooterView from '../footer/footer-view';
 import ModalView from './modal-view';
 import Application from '../../application';
+import {Initial} from './game-data';
 
-const LITTLE_TIME = 5;
 const views = {
   'two-of-two': GameFirstView,
   'tinder-like': GameSecondView,
@@ -49,7 +49,7 @@ class GameScreen {
       this._stopGame();
       this.root.appendChild(this._renderModal().element);
     };
-    if (this.model.state.time <= LITTLE_TIME) {
+    if (this.model.state.time <= Initial.LOW_TIME) {
       header.element.querySelector(`.game__timer`).classList.add(`blinker`);
     }
     return header;
@@ -72,12 +72,12 @@ class GameScreen {
   _startTimer() {
     this._interval = setInterval(() => {
       this.model.tick();
-      if (this.model.state.time <= 0) {
+      if (this.model.state.time <= Initial.END_TIME) {
         this._stopGame();
         this._onAnswer(false);
       }
       this._updateHeader();
-    }, 1000);
+    }, Initial.TICK_TIME);
   }
   // инициализация игры - установка первоначальных параметров + старт игры
   init() {

@@ -1,5 +1,5 @@
 import {Initial, INITIAL_GAME} from './game-data';
-import {getAnswerType, adaptData} from './game-logic';
+import {getAnswerType, adaptResults} from './game-logic';
 import Application from '../../application';
 
 // модель игры, обрабатывает данные
@@ -24,7 +24,7 @@ class GameModel {
   }
   // условие выхода из игры
   isDead() {
-    return this._state.lives <= 0;
+    return this._state.lives <= Initial.MIN_LIVES;
   }
   // потеря одной жизни
   die() {
@@ -32,7 +32,7 @@ class GameModel {
   }
   // есть ли следующий лвл
   hasNextLevel() {
-    return this.data[this._state.level + 1] !== void 0;
+    return this.data[this._state.level + Initial.LEVEL_STEP] !== void 0;
   }
   // переключение на след лвл
   changeLevel() {
@@ -55,7 +55,7 @@ class GameModel {
   }
 
   saveResults() {
-    Application.showStats(adaptData(this.state), this.player);
+    Application.showStats(adaptResults(this.state), this.player);
   }
 }
 

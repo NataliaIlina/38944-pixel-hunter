@@ -1,13 +1,18 @@
 const Initial = {
   LEVEL: 0,
   TIME: 30,
-  LIVES: 3
+  LOW_TIME: 5,
+  END_TIME: 0,
+  TICK_TIME: 1000,
+  MAX_LIVES: 3,
+  MIN_LIVES: 0,
+  LEVEL_STEP: 1
 };
 
 const INITIAL_GAME = Object.freeze({
   level: Initial.LEVEL,
   time: Initial.TIME,
-  lives: Initial.LIVES
+  lives: Initial.MAX_LIVES
 });
 
 const AnswerType = {

@@ -16,11 +16,12 @@ class Loader {
     };
     return fetch(`${SERVER_URL}/stats/${APP_ID}-${name}`, settings)
         .then(checkStatus)
-        .catch(onError);
+        .catch((error) => onError(`Не удалось сохранить результаты текущей игры (${error})`));
   }
 
   static loadResults(name = DEFAULT_NAME) {
-    return loadData(`${SERVER_URL}/stats/${APP_ID}-${name}`);
+    return loadData(`${SERVER_URL}/stats/${APP_ID}-${name}`)
+        .catch((error) => onError(`Произошла ошибка загрузки статистики (${error})`));
   }
 
   static loadQuestions() {
@@ -41,7 +42,8 @@ class Loader {
             });
           });
           return data;
-        });
+        })
+        .catch((error) => onError(`Произошла ошибка загрузки данных (${error})`));
   }
 
   static preloadImages(data) {

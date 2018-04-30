@@ -17,11 +17,11 @@ const getAnswerType = (answer) => {
   return type;
 };
 
-const adaptData = (data) => {
+const adaptResults = (result) => {
   return {
-    'lives': data.lives,
-    'answers': data.answers
+    'lives': result.lives,
+    'answers': result.answers
   };
 };
 
-export {adaptData, getAnswerType};
+export {adaptResults, getAnswerType};

@@ -1,3 +1,5 @@
+import ErrorView from './error-view';
+
 const checkStatus = (response) => {
   if (response.ok) {
     return response;
@@ -9,15 +11,8 @@ const checkStatus = (response) => {
 const toJSON = (response) => response.json();
 
 const onError = (error) => {
-  const element = document.createElement(`div`);
-  element.classList.add(`error`);
-  element.textContent = `Произошла ошибка! ${error}`;
-  document.body.insertAdjacentElement(`afterbegin`, element);
-  const onWindowClick = () => {
-    element.remove();
-    window.removeEventListener(onWindowClick);
-  };
-  window.addEventListener(`click`, onWindowClick);
+  const errorPopup = new ErrorView(error).element;
+  document.body.insertAdjacentElement(`afterbegin`, errorPopup);
 };
 
 // получаем адреса картинок из данных
@@ -38,8 +33,7 @@ const getImagesUrls = (data) => {
 const loadData = (url) => {
   return fetch(url)
       .then(checkStatus)
-      .then(toJSON)
-      .catch(onError);
+      .then(toJSON);
 };
 // промис под одну картинку
 const loadImage = (url) => {
