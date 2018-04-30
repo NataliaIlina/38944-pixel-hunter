@@ -15,19 +15,6 @@ const onError = (error) => {
   const errorPopup = new ErrorView(error).element;
   document.body.insertAdjacentElement(`afterbegin`, errorPopup);
 };
-// получаем адреса картинок из данных
-const getImagesUrls = (data) => {
-  // все ответы
-  const answers = data.map((item) => item.answers);
-  const urls = [];
-  // для каждого массива с ответами получаем url картинок
-  answers.forEach((answer) => {
-    answer.forEach((item) => {
-      urls.push(item.image.url);
-    });
-  });
-  return urls;
-};
 // грузим данные с адреса
 const loadData = (url) => {
   return fetch(url)
@@ -38,27 +25,32 @@ const loadData = (url) => {
 const loadImage = (url) => {
   return new Promise((resolve, reject) => {
     const image = new Image();
+    image.src = url;
     image.onload = () => resolve(image);
     image.onerror = () => reject(`Не удалось загрузить картнку: ${url}`);
-    image.src = url;
   });
 };
 // изменяем размеры картинок в исходникак под фреймы
-const resizeImages = (data) => {
+const preloadImages = (data) => {
+  // массив для промисов
+  const promises = [];
   data.forEach((question) => {
     const type = question.type;
     const answers = question.answers;
     answers.forEach((answer) => {
-      const image = new Image();
-      image.src = answer.image.url;
-      image.onload = () => {
-        const newSize = resize(frameSize[type], {width: image.width, height: image.height});
-        answer.image.width = newSize.width;
-        answer.image.height = newSize.height;
-      };
+      // для каждой картинки создаем промис и пушим в массив
+      promises.push(loadImage(answer.image.url)
+      // при успешкной загрузке меняем размер
+          .then((image) => {
+            const newSize = resize(frameSize[type], {width: image.width, height: image.height});
+            answer.image.width = newSize.width;
+            answer.image.height = newSize.height;
+          })
+          .catch((error) => onError(error)));
     });
   });
-  return data;
+  // возвращаем промисы всх картинок
+  return Promise.all(promises);
 };
 
-export {checkStatus, onError, loadData, getImagesUrls, loadImage, resizeImages};
+export {checkStatus, onError, loadData, preloadImages};

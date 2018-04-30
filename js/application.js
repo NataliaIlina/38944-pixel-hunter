@@ -5,6 +5,7 @@ import GameScreen from './templates/game/game-screen';
 import GameModel from './templates/game/game-model';
 import StatisticsView from './templates/statistics/statistics-view';
 import Loader from './loader/loader';
+import {preloadImages} from './loader/load-utils';
 
 const TIME_FOR_REMOVE_LOADER = 2000;
 const main = document.querySelector(`.central`);
@@ -27,7 +28,7 @@ class Application {
           gameData = data;
           return data;
         })
-        .then((data) => Loader.preloadImages(data))
+        .then((data) => preloadImages(data))
         .then(() => intro.hide())
         .then(() => greeting.show())
         .then(() => setTimeout(() => {
@@ -56,7 +57,7 @@ class Application {
     Loader.saveResults(model, player)
         .then(() => Loader.loadResults(player))
         .then((data) => new StatisticsView(data))
-        .then((elem) => changeView(elem.element))
+        .then((stats) => changeView(stats.element))
         .catch(() => this.showGreeting());
   }
 }

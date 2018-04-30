@@ -1,4 +1,4 @@
-import {checkStatus, onError, loadData, getImagesUrls, loadImage, resizeImages} from './load-utils';
+import {checkStatus, onError, loadData} from './load-utils';
 
 const SERVER_URL = `https://es.dump.academy/pixel-hunter`;
 const APP_ID = 30081986;
@@ -25,17 +25,7 @@ class Loader {
 
   static loadQuestions() {
     return loadData(`${SERVER_URL}/questions`)
-    // меняем размер картинок по типу игры
-        .then((data) => resizeImages(data))
         .catch((error) => onError(`Произошла ошибка загрузки данных (${error})`));
-  }
-
-  static preloadImages(data) {
-    const urls = getImagesUrls(data);
-    const promises = urls.map((url) => {
-      return loadImage(url);
-    });
-    return Promise.all(promises);
   }
 }
 
