@@ -8,7 +8,7 @@ import ModalView from './modal-view';
 import Application from '../../application';
 import {Initial, QuestionType} from './game-data';
 
-const views = {
+const Views = {
   [QuestionType.TWO_OF_TWO]: GameFirstView,
   [QuestionType.TINDER_LIKE]: GameSecondView,
   [QuestionType.ONE_OF_THREE]: GameThirdView
@@ -36,7 +36,7 @@ class GameScreen {
 
   _renderLevel(level) {
     // получаем нужную вьюшку
-    const View = views[level.type];
+    const View = Views[level.type];
     const content = new View(level);
     content.onAnswer = this._onAnswer.bind(this);
     return content;

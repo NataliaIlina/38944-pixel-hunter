@@ -39,7 +39,7 @@ const preloadImages = (data) => {
     answers.forEach((answer) => {
       // для каждой картинки создаем промис и пушим в массив
       promises.push(loadImage(answer.image.url)
-      // при успешкной загрузке меняем размер
+      // при успешкной загрузке меняем размер в исходных данных
           .then((image) => {
             const newSize = resize(answer.image, {width: image.width, height: image.height});
             answer.image.width = newSize.width;
@@ -48,7 +48,7 @@ const preloadImages = (data) => {
           .catch((error) => onError(error)));
     });
   });
-  // возвращаем промисы всх картинок
+  // возвращаем промисы всех картинок
   return Promise.all(promises);
 };
 
