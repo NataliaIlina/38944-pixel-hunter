@@ -5,7 +5,7 @@ import GameScreen from './templates/game/game-screen';
 import GameModel from './templates/game/game-model';
 import StatisticsView from './templates/statistics/statistics-view';
 import Loader from './loader/loader';
-import {preloadImages} from './loader/load-utils';
+import {preloadImages, onError} from './loader/load-utils';
 
 const TIME_FOR_REMOVE_LOADER = 2000;
 const main = document.querySelector(`.central`);
@@ -33,7 +33,8 @@ class Application {
         .then(() => greeting.show())
         .then(() => setTimeout(() => {
           greeting.removeLoader(intro.element);
-        }, TIME_FOR_REMOVE_LOADER));
+        }, TIME_FOR_REMOVE_LOADER))
+        .catch((error) => onError(`Произошла ошибка загрузки данных (${error})`));
   }
 
   static showGreeting() {

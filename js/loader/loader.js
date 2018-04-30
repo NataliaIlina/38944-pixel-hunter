@@ -24,8 +24,7 @@ class Loader {
   }
 
   static loadQuestions() {
-    return loadData(`${SERVER_URL}/questions`)
-        .catch((error) => onError(`Произошла ошибка загрузки данных (${error})`));
+    return loadData(`${SERVER_URL}/questions`);
   }
 }
 
