@@ -41,7 +41,7 @@ const preloadImages = (data) => {
       promises.push(loadImage(answer.image.url)
       // при успешкной загрузке меняем размер в исходных данных
           .then((image) => {
-            const newSize = resize(answer.image, {width: image.width, height: image.height});
+            const newSize = resize(answer.image, image);
             answer.image.width = newSize.width;
             answer.image.height = newSize.height;
           })
