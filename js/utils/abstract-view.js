@@ -14,11 +14,10 @@ class AbstractView {
   get element() {
     if (this._element) {
       return this._element;
-    } else {
-      this._element = this.render();
-      this.bind(this._element);
-      return this._element;
     }
+    this._element = this.render();
+    this.bind(this._element);
+    return this._element;
   }
 
   render() {

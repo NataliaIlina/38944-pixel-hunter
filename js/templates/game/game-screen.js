@@ -33,6 +33,11 @@ class GameScreen {
   get element() {
     return this.root;
   }
+  // инициализация игры - установка первоначальных параметров + старт игры
+  init() {
+    this.model.restart();
+    this._startGame();
+  }
 
   _renderLevel(level) {
     // получаем нужную вьюшку
@@ -41,7 +46,6 @@ class GameScreen {
     content.onAnswer = this._onAnswer.bind(this);
     return content;
   }
-
   // собираем хэдер + обработчики
   _renderHeader() {
     const header = new HeaderView(this.model.state);
@@ -79,11 +83,6 @@ class GameScreen {
       this._updateHeader();
     }, Initial.TICK_TIME);
   }
-  // инициализация игры - установка первоначальных параметров + старт игры
-  init() {
-    this.model.restart();
-    this._startGame();
-  }
 
   _startGame() {
     this._changeLevel();
@@ -101,7 +100,6 @@ class GameScreen {
   _endGame(save) {
     if (save) {
       this.model.saveResults();
-      // Application.showStats();
     }
     this.model.restart();
   }

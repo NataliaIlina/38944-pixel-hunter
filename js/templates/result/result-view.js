@@ -18,4 +18,3 @@ class ResultView extends AbstractView {
 
 
 export default ResultView;
-// export {getAnswerType};
