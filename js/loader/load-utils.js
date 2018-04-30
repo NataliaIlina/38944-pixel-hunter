@@ -1,4 +1,5 @@
 import ErrorView from './error-view';
+import {resize, frameSize} from '../utils/resize';
 
 const checkStatus = (response) => {
   if (response.ok) {
@@ -9,12 +10,11 @@ const checkStatus = (response) => {
 };
 
 const toJSON = (response) => response.json();
-
+// обработчик ошибок
 const onError = (error) => {
   const errorPopup = new ErrorView(error).element;
   document.body.insertAdjacentElement(`afterbegin`, errorPopup);
 };
-
 // получаем адреса картинок из данных
 const getImagesUrls = (data) => {
   // все ответы
@@ -28,7 +28,6 @@ const getImagesUrls = (data) => {
   });
   return urls;
 };
-
 // грузим данные с адреса
 const loadData = (url) => {
   return fetch(url)
@@ -44,5 +43,22 @@ const loadImage = (url) => {
     image.src = url;
   });
 };
+// изменяем размеры картинок в исходникак под фреймы
+const resizeImages = (data) => {
+  data.forEach((question) => {
+    const type = question.type;
+    const answers = question.answers;
+    answers.forEach((answer) => {
+      const image = new Image();
+      image.src = answer.image.url;
+      image.onload = () => {
+        const newSize = resize(frameSize[type], {width: image.width, height: image.height});
+        answer.image.width = newSize.width;
+        answer.image.height = newSize.height;
+      };
+    });
+  });
+  return data;
+};
 
-export {checkStatus, onError, loadData, getImagesUrls, loadImage};
+export {checkStatus, onError, loadData, getImagesUrls, loadImage, resizeImages};
