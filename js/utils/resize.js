@@ -10,11 +10,18 @@ const resize = (frame, image) => {
 
   const ratio = width / height;
 
-  width = frame.width;
-  height = width / ratio;
-  if (height > frame.height) {
-    height = frame.height;
-    width = height * ratio;
+  if (width > frame.width) {
+    width = frame.width;
+    height = width / ratio;
+    if (height > frame.height) {
+      height = frame.height;
+      width = height * ratio;
+    }
+  } else {
+    if (height > frame.height) {
+      height = frame.height;
+      width = height * ratio;
+    }
   }
 
   width = Math.floor(width);
