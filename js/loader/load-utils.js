@@ -1,5 +1,5 @@
 import ErrorView from './error-view';
-import {resize, frameSize} from '../utils/resize';
+import {resize} from '../utils/resize';
 
 const checkStatus = (response) => {
   if (response.ok) {
@@ -35,14 +35,13 @@ const preloadImages = (data) => {
   // массив для промисов
   const promises = [];
   data.forEach((question) => {
-    const type = question.type;
     const answers = question.answers;
     answers.forEach((answer) => {
       // для каждой картинки создаем промис и пушим в массив
       promises.push(loadImage(answer.image.url)
       // при успешкной загрузке меняем размер
           .then((image) => {
-            const newSize = resize(frameSize[type], {width: image.width, height: image.height});
+            const newSize = resize(answer.image, {width: image.width, height: image.height});
             answer.image.width = newSize.width;
             answer.image.height = newSize.height;
           })

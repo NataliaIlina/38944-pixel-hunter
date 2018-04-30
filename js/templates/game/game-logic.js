@@ -1,20 +1,16 @@
 import {Result, BonusTime} from './game-data';
 
 const getAnswerType = (answer) => {
-  let type;
-  if (answer.isCorrect) {
-    type = Result.CORRECT;
+  if (!answer.isCorrect) {
+    return Result.WRONG;
   }
   if (answer.isCorrect && answer.time < BonusTime.FAST) {
-    type = Result.FAST;
+    return Result.FAST;
   }
   if (answer.isCorrect && answer.time > BonusTime.SLOW) {
-    type = Result.SLOW;
+    return Result.SLOW;
   }
-  if (!answer.isCorrect) {
-    type = Result.WRONG;
-  }
-  return type;
+  return Result.CORRECT;
 };
 
 const adaptResults = (result) => {

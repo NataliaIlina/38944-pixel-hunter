@@ -6,12 +6,12 @@ import ResultView from '../result/result-view';
 import FooterView from '../footer/footer-view';
 import ModalView from './modal-view';
 import Application from '../../application';
-import {Initial} from './game-data';
+import {Initial, QuestionType} from './game-data';
 
 const views = {
-  'two-of-two': GameFirstView,
-  'tinder-like': GameSecondView,
-  'one-of-three': GameThirdView
+  [QuestionType.TWO_OF_TWO]: GameFirstView,
+  [QuestionType.TINDER_LIKE]: GameSecondView,
+  [QuestionType.ONE_OF_THREE]: GameThirdView
 };
 
 class GameScreen {

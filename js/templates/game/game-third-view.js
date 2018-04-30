@@ -13,15 +13,11 @@ class GameThirdView extends AbstractView {
     return `<div class="game">
       <p class="game__task">${this.question}</p>
       <form class="game__content  game__content--triple">
-        <div class="game__option">
-          <img src="${this.answers[0].image.url}" alt="Option 1" width="${this.answers[0].image.width}" height="${this.answers[0].image.height}">
-        </div>
-        <div class="game__option  game__option--selected">
-          <img src="${this.answers[1].image.url}" alt="Option 1" width="${this.answers[1].image.width}" height="${this.answers[1].image.height}">
-        </div>
-        <div class="game__option">
-          <img src="${this.answers[2].image.url}" alt="Option 1" width="${this.answers[2].image.width}" height="${this.answers[2].image.height}">
-        </div>
+  ${this.answers.map((answer) => {
+    return `<div class="game__option">
+      <img src="${answer.image.url}" alt="Option 1" width="${answer.image.width}" height="${answer.image.height}">
+    </div>`;
+  })}
       </form>
     </div>`;
   }

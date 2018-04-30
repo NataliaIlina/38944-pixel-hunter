@@ -15,6 +15,12 @@ const INITIAL_GAME = Object.freeze({
   lives: Initial.MAX_LIVES
 });
 
+const QuestionType = {
+  TWO_OF_TWO: `two-of-two`,
+  TINDER_LIKE: `tinder-like`,
+  ONE_OF_THREE: `one-of-three`
+};
+
 const AnswerType = {
   PAINTING: `painting`,
   PHOTO: `photo`
@@ -32,4 +38,4 @@ const BonusTime = {
   SLOW: 20
 };
 
-export {Initial, AnswerType, Result, BonusTime, INITIAL_GAME};
+export {Initial, QuestionType, AnswerType, Result, BonusTime, INITIAL_GAME};
