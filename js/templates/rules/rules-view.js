@@ -4,7 +4,6 @@ import FooterView from '../footer/footer-view';
 import Application from '../../application';
 import getElementFromTemplate from '../../utils/create-elem';
 
-// непонятно по критерию Д8 - порядок основных методов - методы -> приватные методы -> перегруженные методы родительских объектов. Вроде все так.
 class RulesView extends AbstractView {
   get template() {
     return `<div class="rules">

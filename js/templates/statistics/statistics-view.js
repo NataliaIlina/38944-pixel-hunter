@@ -6,7 +6,7 @@ import HeaderView from '../header/header-view';
 import Application from '../../application';
 
 const MIN_ANWSERS_FOR_WIN = 7;
-// непонятно по критерию Д8 - порядок основных методов - методы -> приватные методы -> перегруженные методы родительских объектов. Вроде все так.
+
 class StatisticsView extends AbstractView {
   constructor(results) {
     super();
