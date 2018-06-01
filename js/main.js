@@ -355,7 +355,7 @@ class GameThirdView extends AbstractView {
     return `<div class="game__option">
       <img src="${answer.image.url}" alt="Option 1" width="${answer.image.width}" height="${answer.image.height}">
     </div>`;
-  })}
+  }).join(``)}
       </form>
     </div>`;
   }
